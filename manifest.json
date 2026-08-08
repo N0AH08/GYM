@@ -1,0 +1,15 @@
+{
+  "name": "Scheda Allenamento",
+  "short_name": "Scheda GYM",
+  "description": "Scheda di allenamento interattiva: postura, forza e mobilità con checklist, timer, statistiche e spiegazioni degli esercizi.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0f1117",
+  "theme_color": "#0f1117",
+  "lang": "it",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
