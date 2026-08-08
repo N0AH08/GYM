@@ -140,6 +140,88 @@
 
   .bottom-nav button:active { color: var(--accent-b); }
 
+  .header-left { display: flex; align-items: center; gap: 8px; }
+
+  /* MENU */
+  .menu-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 250;
+    background: rgba(5, 7, 12, 0.55);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  .menu-overlay.hidden { display: none; }
+
+  .menu-panel {
+    width: min(340px, 86vw);
+    height: 100%;
+    background: var(--card);
+    border-right: 1px solid var(--border);
+    padding: 20px 14px calc(20px + env(safe-area-inset-bottom));
+    overflow-y: auto;
+    box-shadow: 24px 0 60px rgba(0, 0, 0, 0.45);
+    animation: menu-in 0.25s ease;
+  }
+
+  @keyframes menu-in { from { transform: translateX(-100%); } }
+
+  .menu-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.1rem;
+    margin-bottom: 6px;
+    padding: 0 6px;
+  }
+
+  .menu-close {
+    background: var(--card-2);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    font-size: 0.95rem;
+    cursor: pointer;
+  }
+
+  .menu-group h4 {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--muted);
+    margin: 20px 6px 6px;
+  }
+
+  .menu-group:first-of-type h4 { margin-top: 10px; }
+
+  .menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: var(--text);
+    padding: 12px 12px;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .menu-item:hover { background: var(--card-2); }
+
+  .menu-item:active { background: var(--card-2); }
+
+  .menu-item .ico { font-size: 1.15rem; width: 26px; text-align: center; flex-shrink: 0; }
+
   body.no-scroll { overflow: hidden; }
 
   .btn:active, .preset-btn:active, .complete-btn:active, .guide-big:active, .info-btn:active, .check:active { transform: scale(0.96); }
@@ -1070,7 +1152,7 @@
   @media print {
     body { background: #fff; color: #111; padding: 0; }
     .container { max-width: 100%; }
-    .theme-toggle, .stats, .timers, .filter-row, .complete-btn, .danger-btn, .check, .meta-inputs, .info-btn, .ex-desc, .reminder-status, #installBtn, .weight-chart, .weight-form, .reset-btn, .ios-banner, .bottom-nav, .guide-overlay, .guide-btn, .confetti, .header-top { display: none !important; }
+    .theme-toggle, .stats, .timers, .filter-row, .complete-btn, .danger-btn, .check, .meta-inputs, .info-btn, .ex-desc, .reminder-status, #installBtn, .weight-chart, .weight-form, .reset-btn, .ios-banner, .bottom-nav, .guide-overlay, .guide-btn, .confetti, .header-top, .menu-overlay { display: none !important; }
     header { padding: 12px 0; }
     header h1 { -webkit-text-fill-color: #111; background: none; }
     .badge, .day-card, .tip-card, .warning, .recover-note, table, .stat-card, .heatmap-wrap { background: #fff; border-color: #ccc; }
@@ -1098,8 +1180,11 @@
 
   <header>
     <div class="header-top">
+      <span class="header-left">
+        <button class="theme-toggle" id="menuBtn" title="Menu" aria-label="Apri menu">☰</button>
+        <button id="installBtn" style="display:none;">📲 Installa</button>
+      </span>
       <button class="theme-toggle" id="themeToggle" title="Cambia tema">🌙</button>
-      <button id="installBtn" style="display:none;">📲 Installa</button>
     </div>
     <h1>🏋️ Scheda di Allenamento</h1>
     <p>Postura, forza e mobilità — Piano di 3 settimane</p>
@@ -1110,8 +1195,48 @@
     </div>
   </header>
 
+  <!-- MENU -->
+  <div class="menu-overlay hidden" id="menuOverlay" role="dialog" aria-modal="true" aria-label="Menu di navigazione">
+    <div class="menu-panel">
+      <div class="menu-head">
+        <strong>☰ Navigazione</strong>
+        <button class="menu-close" id="menuClose" aria-label="Chiudi menu">✕</button>
+      </div>
+
+      <div class="menu-group">
+        <h4>Allenamento di oggi</h4>
+        <button class="menu-item" data-target="card-morning" data-type="morning"><span class="ico">🌅</span> Sessione mattutina</button>
+        <button class="menu-item" data-target="card-A" data-type="A"><span class="ico">🔥</span> Sessione A · Petto e spalle</button>
+        <button class="menu-item" data-target="card-B" data-type="B"><span class="ico">🔥</span> Sessione B · Schiena e postura</button>
+        <button class="menu-item" data-target="card-C" data-type="C"><span class="ico">🦵</span> Sessione C · Gambe e core</button>
+        <button class="menu-item" data-target="recoverNote" data-type="recover"><span class="ico">🌿</span> Recupero attivo</button>
+        <button class="menu-item" data-target="dailySection"><span class="ico">📋</span> Struttura quotidiana</button>
+      </div>
+
+      <div class="menu-group">
+        <h4>Strumenti</h4>
+        <button class="menu-item" data-target="timersSection"><span class="ico">⏱️</span> Timer e cronometri</button>
+      </div>
+
+      <div class="menu-group">
+        <h4>Progressi</h4>
+        <button class="menu-item" data-target="statsSection"><span class="ico">📊</span> Statistiche</button>
+        <button class="menu-item" data-target="constancySection"><span class="ico">🔥</span> Costanza</button>
+        <button class="menu-item" data-target="weightSection"><span class="ico">⚖️</span> Peso corporeo</button>
+        <button class="menu-item" data-target="historySection"><span class="ico">📖</span> Storico allenamenti</button>
+        <button class="menu-item" data-target="sessTimesTitle"><span class="ico">⏲️</span> Tempi sessione</button>
+      </div>
+
+      <div class="menu-group">
+        <h4>Info</h4>
+        <button class="menu-item" data-target="calendarSection"><span class="ico">📅</span> Calendario del piano</button>
+        <button class="menu-item" data-target="tipsSection"><span class="ico">💡</span> Consigli per migliorare</button>
+      </div>
+    </div>
+  </div>
+
   <!-- STATS -->
-  <section class="stats">
+  <section class="stats" id="statsSection">
     <div class="stat-card">
       <div class="num" id="statTotal">0</div>
       <div class="lbl">Sessioni completate</div>
@@ -1128,7 +1253,7 @@
   </section>
 
   <!-- COSTANZA -->
-  <section>
+  <section id="constancySection">
     <h2><span class="dot" style="background: var(--accent-tip);"></span> Costanza</h2>
     <div class="heatmap-wrap">
       <div class="heat-months" id="heatMonths"></div>
@@ -1145,7 +1270,7 @@
   </section>
 
   <!-- PESO CORPOREO -->
-  <section>
+  <section id="weightSection">
     <h2><span class="dot" style="background: var(--accent-a);"></span> Peso corporeo</h2>
     <div class="weight-wrap">
       <div class="weight-form">
@@ -1212,7 +1337,7 @@
   </section>
 
   <!-- STRUTTURA QUOTIDIANA -->
-  <section>
+  <section id="dailySection">
     <h2>
       <span class="dot" style="background: var(--accent-morning);"></span> Struttura quotidiana
       <span class="filter-row">
@@ -1247,7 +1372,7 @@
   </section>
 
   <!-- CONSIGLI -->
-  <section>
+  <section id="tipsSection">
     <h2><span class="dot" style="background: var(--accent-tip);"></span> Come migliorare più rapidamente</h2>
     <div class="tips-grid">
       <div class="tip-card"><span class="icon">⏳</span><p><strong>Recupera bene</strong>60–90s tra le serie, 2 minuti dopo gli esercizi più impegnativi.</p></div>
@@ -1271,7 +1396,7 @@
     <p class="empty" id="historyEmpty">Nessuna sessione completata finora. Inizia spuntando gli esercizi e premi “Completa sessione”! 💪</p>
     <button class="danger-btn" id="historyReset">🗑 Azzera storico</button>
 
-    <h3 style="font-size:1.15rem; font-weight:700; margin:28px 0 12px;">🏋️ Tempi sessione</h3>
+    <h3 style="font-size:1.15rem; font-weight:700; margin:28px 0 12px;" id="sessTimesTitle">🏋️ Tempi sessione</h3>
     <div class="stats" style="margin-top:0;" id="sessStats"></div>
     <div class="history-list" id="sessList"></div>
     <p class="empty" id="sessEmpty">Nessun tempo registrato. Usa il cronometro sessione e premi “💾 Salva tempo”.</p>
@@ -2462,6 +2587,38 @@
         el = document.getElementById(target);
       }
       if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
+  /* ---------- MENU ---------- */
+  const menuOverlay = document.getElementById('menuOverlay');
+  const menuCloseBtn = document.getElementById('menuClose');
+
+  const openMenu = () => {
+    menuOverlay.classList.remove('hidden');
+    document.body.classList.add('no-scroll');
+    menuCloseBtn.focus();
+  };
+  const closeMenu = () => {
+    menuOverlay.classList.add('hidden');
+    document.body.classList.remove('no-scroll');
+  };
+
+  document.getElementById('menuBtn').addEventListener('click', openMenu);
+  menuCloseBtn.addEventListener('click', closeMenu);
+  menuOverlay.addEventListener('click', e => { if (e.target === menuOverlay) closeMenu(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
+
+  document.querySelectorAll('.menu-item').forEach(item => {
+    item.addEventListener('click', () => {
+      closeMenu();
+      const type = item.dataset.type;
+      if (type) {
+        filterSel.value = type;
+        filterSel.dispatchEvent(new Event('change'));
+      }
+      const el = document.getElementById(item.dataset.target);
+      if (el) setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 60);
     });
   });
 
