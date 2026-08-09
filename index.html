@@ -38,9 +38,7 @@
     --border: #dde2ec;
   }
 
-  html[data-theme="light"] .day-card, html[data-theme="light"] .stat-card, html[data-theme="light"] .timer-card,
-  html[data-theme="light"] .tip-card, html[data-theme="light"] .heatmap-wrap, html[data-theme="light"] table,
-  html[data-theme="light"] .weight-wrap, html[data-theme="light"] .history-item, html[data-theme="light"] .warning {
+  html[data-theme="light"] .day-card, html[data-theme="light"] .timer-card {
     box-shadow: 0 4px 16px rgba(28, 35, 51, 0.07);
   }
 
@@ -73,8 +71,8 @@
     outline-offset: 2px;
   }
 
-  .day-card, .stat-card, .timer-card, .tip-card, .heatmap-wrap, table, .weight-wrap, .history-item, .warning {
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.18);
+  .day-card, .timer-card {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   }
 
   .container { max-width: 980px; margin: 0 auto; }
@@ -106,7 +104,15 @@
     flex-shrink: 0;
   }
 
-  .day-card.today-card { border-color: var(--accent-morning); }
+  .day-card.today-card {
+    border: 2px solid transparent;
+    background:
+      linear-gradient(var(--card), var(--card)) padding-box,
+      linear-gradient(135deg, var(--accent-morning), var(--accent-tip)) border-box;
+    box-shadow: 0 12px 36px rgba(78, 205, 196, 0.2);
+  }
+
+  .day-card.today-card .day-head h3 { color: var(--accent-morning); }
 
   .bottom-nav {
     display: none;
@@ -141,6 +147,43 @@
   .bottom-nav button:active { color: var(--accent-b); }
 
   .header-left { display: flex; align-items: center; gap: 8px; }
+
+  /* BARRA NAVIGAZIONE RAPIDA */
+  .quick-nav {
+    position: sticky;
+    top: 0;
+    z-index: 90;
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 12px 2px 10px;
+    margin: 0 -6px 2px;
+    background: var(--bg);
+    scrollbar-width: none;
+  }
+
+  .quick-nav::-webkit-scrollbar { display: none; }
+
+  .chip {
+    flex-shrink: 0;
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    border-radius: 999px;
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .chip:hover { border-color: var(--accent-b); color: var(--text); }
+
+  .chip.active {
+    background: var(--accent-b);
+    border-color: var(--accent-b);
+    color: #06231f;
+  }
 
   /* MENU */
   .menu-overlay {
@@ -461,18 +504,29 @@
   .badge span { color: var(--accent-morning); }
 
   /* STATS */
-  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin: 24px 0 8px; }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 6px; margin: 22px 0 6px; }
 
   .stat-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 14px 18px;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 10px 8px;
     text-align: center;
+    position: relative;
   }
 
-  .stat-card .num { font-size: 1.6rem; font-weight: 800; }
-  .stat-card .lbl { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
+  .stat-card:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: 0; top: 12%; bottom: 12%;
+    width: 1px;
+    background: var(--border);
+  }
+
+  .stat-card .num { font-size: 2rem; font-weight: 800; font-variant-numeric: tabular-nums; }
+  .stat-card:nth-child(2) .num { color: var(--accent-b); }
+  .stat-card:nth-child(3) .num { color: var(--accent-morning); }
+  .stat-card .lbl { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
 
   .stat-card .bar { height: 6px; background: var(--card-2); border-radius: 99px; margin-top: 8px; overflow: hidden; }
 
@@ -482,8 +536,8 @@
   .timers { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin: 16px 0 8px; }
 
   .timer-card {
-    background: var(--card);
-    border: 1px solid var(--border);
+    background: var(--card-2);
+    border: none;
     border-radius: 16px;
     padding: 20px;
     text-align: center;
@@ -507,7 +561,7 @@
   .presets { display: flex; justify-content: center; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
 
   .preset-btn {
-    background: var(--card-2);
+    background: var(--card);
     border: 1px solid var(--border);
     color: var(--text);
     padding: 6px 14px;
@@ -523,7 +577,7 @@
   .timer-controls { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
 
   .timer-select {
-    background: var(--card-2);
+    background: var(--card);
     border: 1px solid var(--border);
     color: var(--text);
     padding: 6px 12px;
@@ -534,7 +588,7 @@
   }
 
   .btn {
-    background: var(--card-2);
+    background: var(--card);
     border: 1px solid var(--border);
     color: var(--text);
     padding: 8px 18px;
@@ -575,6 +629,12 @@
 
   h2 .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
 
+  #dailySection h2 { font-size: 1.6rem; margin-top: 0; }
+
+  #calendarSection h2, #constancySection h2, #weightSection h2, #historySection h2 { font-size: 1.2rem; }
+
+  #tipsSection h2 { font-size: 1.05rem; color: var(--muted); }
+
   .filter-row { margin-left: auto; display: flex; align-items: center; gap: 8px; }
 
   .filter-row select {
@@ -595,6 +655,15 @@
     margin-bottom: 18px;
     position: relative;
     overflow: hidden;
+  }
+
+  #dailySection {
+    margin: 18px 0 6px;
+    padding: 26px 24px 6px;
+    border-radius: 24px;
+    background:
+      radial-gradient(120% 90% at 10% 0%, rgba(78, 205, 196, 0.1), transparent 60%),
+      radial-gradient(120% 90% at 90% 100%, rgba(255, 107, 107, 0.08), transparent 60%);
   }
 
   .day-card.hidden { display: none; }
@@ -785,12 +854,12 @@
   .ex-desc.open { display: block; }
 
   /* PESO CORPOREO */
-  .weight-wrap { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 20px; }
+  .weight-wrap { background: var(--card-2); border: none; border-radius: 16px; padding: 20px; }
 
   .weight-form { display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 18px; }
 
   .weight-form input[type="date"] {
-    background: var(--card-2);
+    background: var(--card);
     border: 1px solid var(--border);
     color: var(--text);
     border-radius: 10px;
@@ -804,7 +873,7 @@
 
   .weight-form .kg-input {
     width: 90px;
-    background: var(--card-2);
+    background: var(--card);
     border: 1px solid var(--border);
     color: var(--text);
     border-radius: 10px;
@@ -822,7 +891,7 @@
     gap: 8px;
     height: 150px;
     padding: 10px 6px 0;
-    background: var(--card-2);
+    background: var(--card);
     border-radius: 12px;
     overflow-x: auto;
     min-height: 120px;
@@ -901,7 +970,7 @@
   .note-red { background: rgba(255, 107, 107, 0.1); border-left: 3px solid var(--accent-a); }
 
   /* HEATMAP */
-  .heatmap-wrap { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 20px; overflow-x: auto; }
+  .heatmap-wrap { background: var(--card-2); border: none; border-radius: 16px; padding: 20px; overflow-x: auto; }
 
   .heatmap {
     display: grid;
@@ -928,7 +997,7 @@
   .heat-cell {
     width: 16px; height: 16px;
     border-radius: 4px;
-    background: var(--card-2);
+    background: var(--card);
     border: 1px solid var(--border);
   }
 
@@ -952,7 +1021,6 @@
     background: var(--card);
     border-radius: 16px;
     overflow: hidden;
-    border: 1px solid var(--border);
   }
 
   thead th {
@@ -976,9 +1044,47 @@
 
   tbody tr.selected td { background: rgba(78, 205, 196, 0.08); }
 
+  tbody tr.is-today td { background: rgba(85, 239, 196, 0.08); box-shadow: inset 3px 0 0 var(--accent-tip); }
+
+  tbody tr.is-today td.date { color: var(--accent-tip); }
+
+  tbody tr.is-future td { opacity: 0.55; }
+
+  tr.week-row td { padding: 16px 18px 6px; border-bottom: none; cursor: default; }
+
+  tr.week-row:hover td { background: transparent; }
+
+  .week-label {
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.75rem;
+    color: var(--accent-b);
+  }
+
+  .week-progress { margin-left: 12px; font-size: 0.78rem; color: var(--muted); font-weight: 600; }
+
+  .cal-date { font-weight: 700; color: var(--text); }
+
+  .cal-wd { font-size: 0.7rem; color: var(--muted); font-weight: 500; margin-left: 6px; text-transform: capitalize; }
+
+  .cal-rel {
+    display: inline-block;
+    font-size: 0.65rem;
+    font-weight: 800;
+    padding: 2px 8px;
+    border-radius: 999px;
+    margin-left: 8px;
+    vertical-align: 1px;
+  }
+
+  .cal-rel.today { background: rgba(85, 239, 196, 0.18); color: var(--accent-tip); }
+
+  .cal-rel.other { background: var(--card-2); color: var(--muted); }
+
   tbody tr.done td { opacity: 0.55; }
 
-  td.date { font-weight: 700; color: var(--muted); width: 90px; }
+  td.date { width: 130px; }
 
   td.done-mark { width: 40px; text-align: center; }
 
@@ -996,15 +1102,16 @@
   .w-recover { background: rgba(162, 155, 254, 0.15); color: var(--accent-recover); }
 
   /* CONSIGLI */
-  .tips-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin-top: 8px; }
+  .tips-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0 36px; margin-top: 8px; }
 
   .tip-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 16px 18px;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 12px 0;
     display: flex;
     gap: 12px;
+    border-bottom: 1px dashed var(--border);
   }
 
   .tip-card .icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 2px; }
@@ -1015,7 +1122,7 @@
 
   .warning {
     margin-top: 36px;
-    background: var(--card);
+    background: rgba(255, 107, 107, 0.06);
     border: 1px solid rgba(255, 107, 107, 0.3);
     border-radius: 16px;
     padding: 20px 24px;
@@ -1038,13 +1145,14 @@
   .recover-note strong { color: var(--accent-recover); }
 
   /* STORICO */
-  .history-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 10px; margin-top: 8px; }
+  .history-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 0 28px; margin-top: 8px; }
 
   .history-item {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 12px 16px;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    border-bottom: 1px solid var(--border);
+    padding: 12px 4px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -1087,8 +1195,10 @@
     h2 { font-size: 1.25rem; margin: 28px 0 12px; }
 
     .stats { gap: 8px; margin: 18px 0 6px; }
-    .stat-card { padding: 10px 8px; }
-    .stat-card .num { font-size: 1.3rem; }
+    .stat-card { padding: 10px 4px; }
+    .stat-card .num { font-size: 1.6rem; }
+
+    #dailySection { padding: 18px 14px 2px; border-radius: 18px; }
 
     .timers { grid-template-columns: 1fr; gap: 10px; margin: 12px 0 6px; }
     .timer-card { padding: 16px 12px; }
@@ -1120,10 +1230,13 @@
 
     .weight-chart { height: 140px; }
     .weight-stats { gap: 8px; }
-    .history-list { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
+    .history-list { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 0 16px; }
 
     table thead th, tbody td { padding: 9px 10px; }
-    td.date { width: 68px; }
+    td.date { width: 96px; }
+    .cal-wd { display: none; }
+    .cal-rel { margin-left: 6px; padding: 1px 6px; }
+    tr.week-row td { padding: 12px 10px 4px; }
     .workout-pill { font-size: 0.75rem; padding: 2px 9px; }
 
     .tips-grid { grid-template-columns: 1fr; gap: 10px; }
@@ -1152,7 +1265,7 @@
   @media print {
     body { background: #fff; color: #111; padding: 0; }
     .container { max-width: 100%; }
-    .theme-toggle, .stats, .timers, .filter-row, .complete-btn, .danger-btn, .check, .meta-inputs, .info-btn, .ex-desc, .reminder-status, #installBtn, .weight-chart, .weight-form, .reset-btn, .ios-banner, .bottom-nav, .guide-overlay, .guide-btn, .confetti, .header-top, .menu-overlay { display: none !important; }
+    .theme-toggle, .stats, .timers, .filter-row, .complete-btn, .danger-btn, .check, .meta-inputs, .info-btn, .ex-desc, .reminder-status, #installBtn, .weight-chart, .weight-form, .reset-btn, .ios-banner, .bottom-nav, .guide-overlay, .guide-btn, .confetti, .header-top, .menu-overlay, .quick-nav { display: none !important; }
     header { padding: 12px 0; }
     header h1 { -webkit-text-fill-color: #111; background: none; }
     .badge, .day-card, .tip-card, .warning, .recover-note, table, .stat-card, .heatmap-wrap { background: #fff; border-color: #ccc; }
@@ -1235,6 +1348,17 @@
     </div>
   </div>
 
+  <!-- BARRA NAVIGAZIONE RAPIDA -->
+  <nav class="quick-nav" id="quickNav" aria-label="Vai a sezione">
+    <button class="chip active" data-target="dailySection">🏋️ Allenamento</button>
+    <button class="chip" data-target="timersSection">⏱️ Timer</button>
+    <button class="chip" data-target="calendarSection">📅 Piano</button>
+    <button class="chip" data-target="constancySection">🔥 Costanza</button>
+    <button class="chip" data-target="weightSection">⚖️ Peso</button>
+    <button class="chip" data-target="historySection">📖 Storico</button>
+    <button class="chip" data-target="tipsSection">💡 Consigli</button>
+  </nav>
+
   <!-- STATS -->
   <section class="stats" id="statsSection">
     <div class="stat-card">
@@ -1252,36 +1376,27 @@
     </div>
   </section>
 
-  <!-- COSTANZA -->
-  <section id="constancySection">
-    <h2><span class="dot" style="background: var(--accent-tip);"></span> Costanza</h2>
-    <div class="heatmap-wrap">
-      <div class="heat-months" id="heatMonths"></div>
-      <div class="heatmap" id="heatmap"></div>
-      <div class="heat-legend">
-        <span>Meno</span>
-        <span class="heat-cell"></span>
-        <span class="heat-cell l1"></span>
-        <span class="heat-cell l2"></span>
-        <span class="heat-cell l3"></span>
-        <span>Più</span>
-      </div>
-    </div>
-  </section>
+  <!-- STRUTTURA QUOTIDIANA -->
+  <section id="dailySection">
+    <h2>
+      <span class="dot" style="background: var(--accent-morning);"></span> Struttura quotidiana
+      <span class="filter-row">
+        <label for="dayFilter" style="font-size:0.85rem; color:var(--muted);">Mostra:</label>
+        <select id="dayFilter">
+          <option value="all">Tutti i giorni</option>
+          <option value="morning">🌅 Solo mattutina</option>
+          <option value="A">A · Petto e spalle</option>
+          <option value="B">B · Schiena e postura</option>
+          <option value="C">C · Gambe e core</option>
+          <option value="recover">🌿 Recupero attivo</option>
+        </select>
+      </span>
+    </h2>
 
-  <!-- PESO CORPOREO -->
-  <section id="weightSection">
-    <h2><span class="dot" style="background: var(--accent-a);"></span> Peso corporeo</h2>
-    <div class="weight-wrap">
-      <div class="weight-form">
-        <input class="kg-input" id="wInput" placeholder="72,5" inputmode="decimal"> <span style="color:var(--muted);">kg</span>
-        <input type="date" id="wDate">
-        <button class="btn primary" id="wSave">💾 Salva</button>
-      </div>
-      <div class="weight-chart" id="wChart"><div class="w-empty">Nessun dato ancora — registra il tuo primo peso! ⚖️</div></div>
-      <div class="weight-stats" id="wStats"></div>
-      <div class="history-list" id="wList"></div>
-      <button class="danger-btn" id="wReset">🗑 Azzera peso</button>
+    <div id="cards"></div>
+
+    <div class="recover-note hidden" id="recoverNote">
+      <strong>Giorni di recupero attivo:</strong> solo routine mattutina, camminata tranquilla di 20–40 minuti e, se vuoi, stretching leggero.
     </div>
   </section>
 
@@ -1336,30 +1451,6 @@
     </div>
   </section>
 
-  <!-- STRUTTURA QUOTIDIANA -->
-  <section id="dailySection">
-    <h2>
-      <span class="dot" style="background: var(--accent-morning);"></span> Struttura quotidiana
-      <span class="filter-row">
-        <label for="dayFilter" style="font-size:0.85rem; color:var(--muted);">Mostra:</label>
-        <select id="dayFilter">
-          <option value="all">Tutti i giorni</option>
-          <option value="morning">🌅 Solo mattutina</option>
-          <option value="A">A · Petto e spalle</option>
-          <option value="B">B · Schiena e postura</option>
-          <option value="C">C · Gambe e core</option>
-          <option value="recover">🌿 Recupero attivo</option>
-        </select>
-      </span>
-    </h2>
-
-    <div id="cards"></div>
-
-    <div class="recover-note hidden" id="recoverNote">
-      <strong>Giorni di recupero attivo:</strong> solo routine mattutina, camminata tranquilla di 20–40 minuti e, se vuoi, stretching leggero.
-    </div>
-  </section>
-
   <!-- CALENDARIO -->
   <section class="calendar" id="calendarSection">
     <h2><span class="dot" style="background: var(--accent-c);"></span> Calendario del piano <span style="font-size:0.85rem; font-weight:400; color:var(--muted); margin-left:auto;">👆 Tocca un giorno per vederne la scheda</span></h2>
@@ -1369,6 +1460,53 @@
       </thead>
       <tbody id="calendarBody"></tbody>
     </table>
+  </section>
+
+  <!-- COSTANZA -->
+  <section id="constancySection">
+    <h2><span class="dot" style="background: var(--accent-tip);"></span> Costanza</h2>
+    <div class="heatmap-wrap">
+      <div class="heat-months" id="heatMonths"></div>
+      <div class="heatmap" id="heatmap"></div>
+      <div class="heat-legend">
+        <span>Meno</span>
+        <span class="heat-cell"></span>
+        <span class="heat-cell l1"></span>
+        <span class="heat-cell l2"></span>
+        <span class="heat-cell l3"></span>
+        <span>Più</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PESO CORPOREO -->
+  <section id="weightSection">
+    <h2><span class="dot" style="background: var(--accent-a);"></span> Peso corporeo</h2>
+    <div class="weight-wrap">
+      <div class="weight-form">
+        <input class="kg-input" id="wInput" placeholder="72,5" inputmode="decimal"> <span style="color:var(--muted);">kg</span>
+        <input type="date" id="wDate">
+        <button class="btn primary" id="wSave">💾 Salva</button>
+      </div>
+      <div class="weight-chart" id="wChart"><div class="w-empty">Nessun dato ancora — registra il tuo primo peso! ⚖️</div></div>
+      <div class="weight-stats" id="wStats"></div>
+      <div class="history-list" id="wList"></div>
+      <button class="danger-btn" id="wReset">🗑 Azzera peso</button>
+    </div>
+  </section>
+
+  <!-- STORICO -->
+  <section id="historySection">
+    <h2><span class="dot" style="background: var(--accent-recover);"></span> Storico allenamenti</h2>
+    <div class="history-list" id="historyList"></div>
+    <p class="empty" id="historyEmpty">Nessuna sessione completata finora. Inizia spuntando gli esercizi e premi “Completa sessione”! 💪</p>
+    <button class="danger-btn" id="historyReset">🗑 Azzera storico</button>
+
+    <h3 style="font-size:1.15rem; font-weight:700; margin:28px 0 12px;" id="sessTimesTitle">🏋️ Tempi sessione</h3>
+    <div class="stats" style="margin-top:0;" id="sessStats"></div>
+    <div class="history-list" id="sessList"></div>
+    <p class="empty" id="sessEmpty">Nessun tempo registrato. Usa il cronometro sessione e premi “💾 Salva tempo”.</p>
+    <button class="danger-btn" id="sessResetAll">🗑 Azzera tempi</button>
   </section>
 
   <!-- CONSIGLI -->
@@ -1388,20 +1526,6 @@
     <h3>⚠️ Segnali di allarme</h3>
     <p>Interrompi immediatamente l'esercizio se compaiono <strong>dolore toracico, vertigini, palpitazioni, mancanza d'aria insolita o dolore articolare</strong>.</p>
   </div>
-
-  <!-- STORICO -->
-  <section id="historySection">
-    <h2><span class="dot" style="background: var(--accent-recover);"></span> Storico allenamenti</h2>
-    <div class="history-list" id="historyList"></div>
-    <p class="empty" id="historyEmpty">Nessuna sessione completata finora. Inizia spuntando gli esercizi e premi “Completa sessione”! 💪</p>
-    <button class="danger-btn" id="historyReset">🗑 Azzera storico</button>
-
-    <h3 style="font-size:1.15rem; font-weight:700; margin:28px 0 12px;" id="sessTimesTitle">🏋️ Tempi sessione</h3>
-    <div class="stats" style="margin-top:0;" id="sessStats"></div>
-    <div class="history-list" id="sessList"></div>
-    <p class="empty" id="sessEmpty">Nessun tempo registrato. Usa il cronometro sessione e premi “💾 Salva tempo”.</p>
-    <button class="danger-btn" id="sessResetAll">🗑 Azzera tempi</button>
-  </section>
 
   <footer>💪 Costanza e ascolto del corpo — buon allenamento!</footer>
 
@@ -1497,13 +1621,12 @@
 
   const PATTERN = ['A', 'B', 'C', 'A', 'B', 'recover', 'C', 'A', 'B', 'C', 'recover', 'A', 'B', 'C', 'A', 'B', 'recover', 'C', 'A'];
 
-  const DAYS = (() => {
+  const planStart = new Date(2026, 7, 8); /* il piano parte l'8 agosto 2026 */
+  const getPlanDays = () => {
     const list = [];
-    const base = new Date();
-    base.setHours(0, 0, 0, 0);
     for (let i = 0; i < PATTERN.length; i++) {
-      const d = new Date(base);
-      d.setDate(base.getDate() + i);
+      const d = new Date(planStart);
+      d.setDate(planStart.getDate() + i);
       list.push({
         iso: d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'),
         day: String(d.getDate()),
@@ -1512,7 +1635,9 @@
       });
     }
     return list;
-  })();
+  };
+
+  const DAYS = getPlanDays();
 
   const RECOVER_LABELS = {
     A: 'A · Petto, spalle, tricipiti',
@@ -1781,21 +1906,52 @@
 
   function renderCalendar() {
     calBody.innerHTML = '';
+    const days = getPlanDays();
     const doneDates = new Set(history.map(h => h.date));
+    const today = todayISO();
 
-    DAYS.forEach(day => {
+    const rel = iso => {
+      if (iso === today) return 'Oggi';
+      const diff = Math.round((new Date(iso + 'T00:00:00') - new Date(today + 'T00:00:00')) / 86400000);
+      if (diff === -1) return 'Ieri';
+      if (diff === 1) return 'Domani';
+      return '';
+    };
+
+    let lastWeek = -1;
+    days.forEach((day, i) => {
+      const wk = Math.floor(i / 7);
+      if (wk !== lastWeek) {
+        lastWeek = wk;
+        const weekDays = days.slice(wk * 7, wk * 7 + 7);
+        const doneCount = weekDays.filter(d => doneDates.has(d.iso)).length;
+        const wkRow = document.createElement('tr');
+        wkRow.className = 'week-row';
+        wkRow.innerHTML = `
+          <td colspan="3">
+            <span class="week-label">Settimana ${wk + 1}</span>
+            <span class="week-progress">${doneCount}/${weekDays.length} completati</span>
+          </td>`;
+        calBody.appendChild(wkRow);
+      }
+
       const { iso, day: d, month: m, type } = day;
       const isDone = doneDates.has(iso);
-      const isToday = iso === nowISO;
+      const isToday = iso === today;
+      const isFuture = iso > today;
+      const r = rel(iso);
+      const wd = new Date(iso + 'T00:00:00').toLocaleDateString('it-IT', { weekday: 'short' });
 
       const tr = document.createElement('tr');
       tr.dataset.iso = iso;
       tr.dataset.type = type;
       if (isDone) tr.classList.add('done');
+      if (isToday) tr.classList.add('is-today');
+      if (isFuture) tr.classList.add('is-future');
       tr.innerHTML = `
-        <td class="date">${isToday ? '📌 ' : ''}${d} ${m}</td>
+        <td class="date"><span class="cal-date">${d} ${m}</span><span class="cal-wd">${wd}</span>${r ? `<span class="cal-rel ${isToday ? 'today' : 'other'}">${r}</span>` : ''}</td>
         <td><span class="workout-pill ${dayTypeOf(type)}">${RECOVER_LABELS[type]}</span></td>
-        <td class="done-mark">${isDone ? '✅' : '⬜'}</td>
+        <td class="done-mark">${isDone ? '✅' : (isFuture ? '—' : '⬜')}</td>
       `;
       tr.addEventListener('click', () => selectDay(iso, type));
       calBody.appendChild(tr);
@@ -1819,21 +1975,23 @@
   function updateStats() {
     document.getElementById('statTotal').textContent = history.length;
 
+    const days = getPlanDays();
+    const now = todayISO();
     let expected = 0;
-    DAYS.forEach(day => {
-      if (day.iso <= nowISO && day.type !== 'recover') expected++;
+    days.forEach(day => {
+      if (day.iso <= now && day.type !== 'recover') expected++;
     });
 
     const doneDates = new Set(history.filter(h => h.type !== 'recover').map(h => h.date));
-    const completed = [...doneDates].filter(d => d <= nowISO).length;
+    const completed = [...doneDates].filter(d => d <= now).length;
     const pct = expected > 0 ? Math.round(completed / expected * 100) : 0;
     document.getElementById('statPct').textContent = expected > 0 ? pct + '%' : '—';
     document.getElementById('statBar').style.width = (expected > 0 ? pct : 0) + '%';
 
-    const todayDay = DAYS.find(day => day.iso === nowISO);
+    const todayDay = days.find(day => day.iso === now);
     document.getElementById('statToday').textContent = todayDay
       ? RECOVER_LABELS[todayDay.type]
-      : (nowISO > DAYS[DAYS.length - 1].iso ? 'Piano terminato 🎉' : 'Piano non ancora iniziato');
+      : (now > days[days.length - 1].iso ? 'Piano terminato 🎉' : 'Piano non ancora iniziato');
   }
 
   /* ---------- HEATMAP ---------- */
@@ -2058,15 +2216,46 @@
     }
   }
 
+  let audioCtx = null;
+  function ensureAudio() {
+    if (!audioCtx) {
+      try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { return; }
+    }
+    if (audioCtx.state === 'suspended') audioCtx.resume().catch(() => {});
+  }
+  document.addEventListener('pointerdown', ensureAudio, { passive: true });
+  document.addEventListener('keydown', ensureAudio);
+
+  function chime() {
+    try {
+      ensureAudio();
+      if (!audioCtx) return;
+      [880, 1108.73, 1318.51].forEach((f, i) => {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain); gain.connect(audioCtx.destination);
+        osc.type = 'triangle';
+        osc.frequency.value = f;
+        const t0 = audioCtx.currentTime + i * 0.18;
+        gain.gain.setValueAtTime(0.001, t0);
+        gain.gain.exponentialRampToValueAtTime(0.35, t0 + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.001, t0 + 0.45);
+        osc.start(t0); osc.stop(t0 + 0.5);
+      });
+    } catch (e) { /* audio non disponibile */ }
+    buzz(400);
+  }
+
   function beep(times = 3) {
     try {
-      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      ensureAudio();
+      if (!audioCtx) return;
       for (let i = 0; i < times; i++) {
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.connect(gain); gain.connect(ctx.destination);
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain); gain.connect(audioCtx.destination);
         osc.frequency.value = 880; osc.type = 'sine';
-        const t0 = ctx.currentTime + i * 0.45;
+        const t0 = audioCtx.currentTime + i * 0.45;
         gain.gain.setValueAtTime(0.001, t0);
         gain.gain.exponentialRampToValueAtTime(0.3, t0 + 0.02);
         gain.gain.exponentialRampToValueAtTime(0.001, t0 + 0.35);
@@ -2117,7 +2306,7 @@
           stop(false);
           remaining = getDuration();
           render();
-          beep();
+          chime();
         }
       }, 250);
     }
@@ -2278,7 +2467,7 @@
       if (r <= 0) {
         clearInterval(guideRestInterval);
         guideRestInterval = null;
-        beep(3);
+        chime();
         guide.phase = 'set';
         saveGuide();
         renderGuide();
@@ -2429,12 +2618,12 @@
     const nowD = new Date();
     const hhmm = String(nowD.getHours()).padStart(2, '0') + ':' + String(nowD.getMinutes()).padStart(2, '0');
     const t = todayISO();
-    if (hhmm === remSettings.time && localStorage.getItem(LS.lastNotif) !== t) {
+      if (hhmm === remSettings.time && localStorage.getItem(LS.lastNotif) !== t) {
       localStorage.setItem(LS.lastNotif, t);
       if ('Notification' in window && Notification.permission === 'granted') {
         new Notification('🌅 Routine mattutina', { body: '10 minuti di mobilità e respirazione — via!' });
       }
-      beep(3);
+      chime();
     }
   }, 15000);
 
@@ -2621,6 +2810,32 @@
       if (el) setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 60);
     });
   });
+
+  /* ---------- BARRA NAVIGAZIONE RAPIDA ---------- */
+  const quickChips = document.querySelectorAll('.quick-nav .chip');
+  quickChips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      const el = document.getElementById(chip.dataset.target);
+      if (!el) return;
+      quickChips.forEach(c => c.classList.toggle('active', c === chip));
+      const top = el.getBoundingClientRect().top + window.scrollY - 62;
+      window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+    });
+  });
+
+  if ('IntersectionObserver' in window) {
+    const spy = new IntersectionObserver(entries => {
+      entries.forEach(en => {
+        if (en.isIntersecting) {
+          quickChips.forEach(c => c.classList.toggle('active', c.dataset.target === en.target.id));
+        }
+      });
+    }, { rootMargin: '-30% 0px -60% 0px' });
+    quickChips.forEach(c => {
+      const el = document.getElementById(c.dataset.target);
+      if (el) spy.observe(el);
+    });
+  }
 
   /* ---------- BANNER IOS ---------- */
   const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent) && !window.MSStream;
