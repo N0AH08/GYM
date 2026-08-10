@@ -1,7 +1,7 @@
 {
   "name": "Scheda Allenamento",
   "short_name": "Scheda GYM",
-  "description": "Scheda di allenamento interattiva: postura, forza e mobilità con checklist, timer, statistiche e spiegazioni degli esercizi.",
+  "description": "Scheda di allenamento interattiva: schede M, A e B con checklist, sessione guidata, timer, statistiche e spiegazioni degli esercizi.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
