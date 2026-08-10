@@ -41,7 +41,7 @@ html[data-theme="light"] {
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-html { height: 100%; }
+html { height: 100%; -webkit-text-size-adjust: 100%; }
 
 body {
   font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
@@ -207,6 +207,8 @@ main { max-width: 660px; margin: 0 auto; padding: 18px 16px 30px; }
 
 .btn.primary { background: var(--b); border-color: var(--b); color: #06231f; }
 .btn.primary:hover { filter: brightness(1.1); }
+
+.btn.small { padding: 6px 12px; font-size: 0.82rem; }
 
 .btn.ghost { background: transparent; }
 
@@ -523,13 +525,13 @@ main { max-width: 660px; margin: 0 auto; padding: 18px 16px 30px; }
 
 .sub-section:first-child h2 { margin-top: 0; }
 
-.heatmap { display: grid; grid-auto-flow: column; grid-template-rows: repeat(7, 13px); gap: 3px; justify-content: start; width: max-content; margin: 6px auto; }
+.heatmap { display: grid; grid-auto-flow: column; grid-template-rows: repeat(7, 14px); gap: 4px; justify-content: start; width: max-content; margin: 6px auto; }
 
-.heat-months { display: grid; grid-template-columns: repeat(9, 108px); width: max-content; margin: 0 auto; font-size: 0.65rem; color: var(--muted); height: 16px; }
+.heat-months { display: grid; grid-template-columns: repeat(9, 18px); width: max-content; margin: 0 auto; font-size: 0.62rem; color: var(--muted); height: 16px; }
 
 .heat-months span { text-align: left; padding-left: 2px; white-space: nowrap; }
 
-.heat-cell { width: 13px; height: 13px; border-radius: 3px; background: var(--card-2); border: 1px solid var(--border); }
+.heat-cell { width: 14px; height: 14px; border-radius: 3px; background: var(--card-2); border: 1px solid var(--border); }
 
 .heat-cell.l1 { background: rgba(78, 205, 196, 0.35); border-color: var(--b); }
 .heat-cell.l2 { background: rgba(85, 239, 196, 0.6); border-color: var(--ok); }
@@ -709,6 +711,13 @@ html[data-theme="light"] .weight-form input[type="date"] { color-scheme: light; 
 
 .guide-head { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
 
+.guide-tag {
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 5px 12px;
+  border-radius: 8px;
+}
+
 .guide-head .g-title { flex: 1; font-weight: 700; font-size: 1.02rem; }
 
 .guide-close {
@@ -847,11 +856,53 @@ footer { text-align: center; margin: 26px 0 10px; color: var(--muted); font-size
 
 /* ---------- RESPONSIVE ---------- */
 @media (max-width: 480px) {
-  .tabbar button { font-size: 0.62rem; }
+  main { padding: 14px 12px 24px; }
+
+  .tabbar button { font-size: 0.6rem; min-height: 52px; padding-bottom: 8px; }
   .tabbar button .ico { font-size: 1.15rem; }
+
   .stats-row { gap: 6px; }
+
+  .hero { padding: 18px 16px; }
+  .hero h2 { font-size: 1.35rem; }
+
+  .card { padding: 15px 14px; }
+  .card-head { margin-bottom: 10px; }
+
   .timer-display { font-size: 2.4rem; }
+
+  .week-table td { padding: 10px 8px; font-size: 0.88rem; }
+  .week-table .day-name { white-space: normal; }
+  .pill { font-size: 0.74rem; padding: 2px 8px; }
+
+  .ex-item { padding: 9px 10px; }
+  .ex-name { font-size: 0.88rem; }
+
   .mini-input { font-size: 16px; }
+
+  .scheme-tabs button { padding: 10px 4px; font-size: 0.95rem; }
+  .scheme-tabs button .sub { font-size: 0.55rem; }
+
+  .guide-ex { font-size: 1.3rem; }
+  .guide-rest-time { font-size: 3.2rem; }
+
+  .weight-stats { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 360px) {
+  .appbar { padding: 10px 12px; }
+  .appbar h1 { font-size: 0.92rem; }
+  .appbar button { padding: 6px 9px; font-size: 0.82rem; }
+
+  .tabbar button { font-size: 0.56rem; }
+  .tabbar button .ico { font-size: 1.05rem; }
+
+  .stat .num { font-size: 1.15rem; }
+  .stat .lbl { font-size: 0.6rem; }
+
+  .timer-display { font-size: 2rem; }
+  .action-row .btn { flex: 1; min-width: 0; padding: 9px 10px; }
+  .guide-rest-time { font-size: 2.8rem; }
 }
 
 /* ---------- STAMPA ---------- */
@@ -1419,6 +1470,7 @@ footer { text-align: center; margin: 26px 0 10px; color: var(--muted); font-size
     `;
 
     $('guideBtn').addEventListener('click', () => openGuide(key));
+    $('guideBtn').style.display = done ? 'none' : '';
     $('doneBtn').addEventListener('click', e => toggleComplete(key, e.target));
     $('resetSetsBtn').addEventListener('click', () => {
       delete setsOver[key];
@@ -2164,10 +2216,11 @@ footer { text-align: center; margin: 26px 0 10px; color: var(--muted); font-size
       }
     }
 
-    months.forEach(m => {
+    months.forEach((m, i) => {
+      const next = months[i + 1] ? months[i + 1].week : 9;
       const span = document.createElement('span');
       span.textContent = m.label;
-      span.style.gridColumn = String(m.week + 1);
+      span.style.gridColumn = `${m.week + 1} / span ${next - m.week}`;
       $('heatMonths').appendChild(span);
     });
   }
