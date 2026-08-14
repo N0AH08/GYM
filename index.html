@@ -391,6 +391,9 @@ main { max-width: 660px; margin: 0 auto; padding: 18px 16px 30px; }
 
 .complete-btn:hover { border-color: var(--b); color: var(--b); }
 
+.complete-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.complete-btn:disabled:hover { border-color: var(--border); color: var(--muted); }
+
 .complete-btn.on { background: var(--ok); border-style: solid; border-color: var(--ok); color: #06231f; }
 
 .complete-btn.guide { border-style: solid; border-color: var(--b); color: var(--b); background: rgba(78, 205, 196, 0.08); }
@@ -1068,12 +1071,6 @@ footer { text-align: center; margin: 26px 0 10px; color: var(--muted); font-size
     return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
   }
 
-  function parseReps(reps) {
-    const m = reps.match(/(\d+)\s*–\s*(\d+)/);
-    if (m) return m[1] + '–' + m[2];
-    return reps;
-  }
-
   function weekBounds() {
     const now = new Date();
     now.setHours(0, 0, 0, 0);
@@ -1143,7 +1140,7 @@ footer { text-align: center; margin: 26px 0 10px; color: var(--muted); font-size
 
     const hero = $('oggiHero');
     hero.innerHTML = `
-      <div class="day">${day.name} · ${new Date().toLocaleDateString('it-IT', { day: 'numeric', month: 'long' })}</div>
+      <div class="day">${day.num} · ${day.name} · ${new Date().toLocaleDateString('it-IT', { day: 'numeric', month: 'long' })}</div>
       <h2>${day.title}</h2>
       <p class="plan">${day.recovery ? 'Recupero attivo: camminata, stretching e respirazione.' : day.circuits.map(c => `${c.name} · ${c.rounds} giri · rec. ${c.restTxt}`).join('<br>')}</p>
       <div class="action-row">
@@ -1184,8 +1181,6 @@ footer { text-align: center; margin: 26px 0 10px; color: var(--muted); font-size
       if (i <= off && isPast) { planned++; if (isDone) doneCount++; }
       if (i > off && isDone) doneCount++;
     }
-    /* giorni di allenamento previsti: 6 (esclusa domenica) */
-    const totalPlanned = Math.min(6, planned + (off >= 6 ? 0 : 0));
     const plannedLabel = Math.min(6, planned || 1);
     $('statWeek').textContent = `${doneCount}/${plannedLabel}`;
     $('statToday').textContent = doneToday ? '✅ Fatto' : day.recovery ? '🌿 Recupero' : '⬜ Da fare';
@@ -1217,7 +1212,8 @@ footer { text-align: center; margin: 26px 0 10px; color: var(--muted); font-size
 
   function renderDay(id) {
     const d = DAY_BY_ID[id];
-    const done = history.some(h => h.type === id && h.date === todayISO()) || history.some(h => h.id === id && h.date === todayISO());
+    const isToday = id === todayDayId();
+    const done = history.some(h => h.id === id && h.date === todayISO());
     const card = $('schedeCard');
 
     card.innerHTML = `
@@ -1232,22 +1228,26 @@ footer { text-align: center; margin: 26px 0 10px; color: var(--muted); font-size
         </div>
         ${d.warmup ? `<div class="note note-blue">${d.warmup}</div>` : ''}
         ${d.note ? `<div class="note ${d.note.cls}">${d.note.text}</div>` : ''}
-        ${d.recovery ? '' : `<button class="complete-btn guide" id="guideBtn">▶ Inizia sessione guidata</button>`}
+        ${!isToday ? `<div class="note note-yellow">Anteprima del ${d.name}. Completa la giornata e usa la sessione guidata il giorno stesso.</div>` : ''}
+        ${d.recovery || !isToday ? '' : `<button class="complete-btn guide" id="guideBtn">▶ Inizia sessione guidata</button>`}
         <div id="dayBody"></div>
         <div class="progress-row">
           <div class="progress-track"><div class="progress-fill" id="dayBar" style="width:0%"></div></div>
           <div class="progress-pct" id="dayPct">0%</div>
         </div>
-        <button class="complete-btn" id="doneBtn">${done ? '✓ Completata — clicca per annullare' : '✓ Completa giornata'}</button>
+        <button class="complete-btn" id="doneBtn" ${isToday ? '' : 'disabled'}>${done ? '✓ Completata — clicca per annullare' : (isToday ? '✓ Completa giornata' : '⏳ Anteprima')}</button>
       </div>
     `;
 
-    if (!d.recovery) {
-      const g = $('guideBtn');
+    const g = $('guideBtn');
+    if (g) {
       g.style.display = done ? 'none' : '';
       g.addEventListener('click', () => openGuide(id));
     }
-    $('doneBtn').addEventListener('click', e => toggleComplete(id, e.target));
+    $('doneBtn').addEventListener('click', e => {
+      if (!isToday) return;
+      toggleComplete(id, e.target);
+    });
 
     renderDayBody(id);
     updateDayProgress(id);
@@ -1397,7 +1397,7 @@ footer { text-align: center; margin: 26px 0 10px; color: var(--muted); font-size
     guideBody.innerHTML = `
       <div class="guide-circuit">${st.circuit} · Giro ${st.round} di ${st.rounds}</div>
       <div class="guide-ex">${st.name}</div>
-      <div class="guide-reps">${st.reps} ripetizioni</div>
+      <div class="guide-reps">${/^(\d+\s*[–-]\s*\d+|max)/i.test(st.reps) ? st.reps + ' ripetizioni' : st.reps}</div>
       <div class="guide-info">Esercizio ${guide.step + 1} di ${total}${guide.step + 1 < total ? ` · Prossimo: ${steps[guide.step + 1].name}` : ' · Ultimo!'}</div>
       <div class="guide-desc" id="guideDesc">${st.desc || ''}</div>
       <button class="guide-desc-toggle" id="guideDescToggle">💡 Come si esegue</button>
