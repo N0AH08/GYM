@@ -107,7 +107,7 @@ button, input, select { touch-action: manipulation; font-family: inherit; }
   left: 0; right: 0; bottom: 0;
   z-index: 100;
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   background: var(--appbar);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -169,11 +169,16 @@ main { max-width: 660px; margin: 0 auto; padding: 18px 16px 30px; }
   font-weight: 800;
   padding: 4px 10px;
   border-radius: 8px;
+  flex-shrink: 0;
 }
 
-.tag-m { background: rgba(116, 185, 255, 0.15); color: var(--m); }
-.tag-a { background: rgba(255, 107, 107, 0.15); color: var(--a); }
-.tag-b { background: rgba(78, 205, 196, 0.15); color: var(--b); }
+.tag-1 { background: rgba(255, 107, 107, 0.15); color: var(--a); }
+.tag-2 { background: rgba(78, 205, 196, 0.15); color: var(--b); }
+.tag-3 { background: rgba(255, 230, 109, 0.15); color: var(--warn); }
+.tag-4 { background: rgba(116, 185, 255, 0.15); color: var(--m); }
+.tag-5 { background: rgba(162, 155, 254, 0.15); color: var(--purple); }
+.tag-6 { background: rgba(255, 107, 107, 0.15); color: var(--a); }
+.tag-7 { background: rgba(85, 239, 196, 0.15); color: var(--ok); }
 
 .chips { display: flex; flex-wrap: wrap; gap: 6px; }
 
@@ -209,10 +214,7 @@ main { max-width: 660px; margin: 0 auto; padding: 18px 16px 30px; }
 .btn.primary:hover { filter: brightness(1.1); }
 
 .btn.small { padding: 6px 12px; font-size: 0.82rem; }
-
 .btn.ghost { background: transparent; }
-
-.btn.block { display: block; width: 100%; }
 
 /* ---------- PAGINA OGGI ---------- */
 .hero {
@@ -253,30 +255,36 @@ main { max-width: 660px; margin: 0 auto; padding: 18px 16px 30px; }
 .action-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
 
 /* ---------- PAGINA SCHEDE ---------- */
-.scheme-tabs {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-  margin-bottom: 14px;
+.day-tabs {
+  display: flex;
+  gap: 7px;
+  overflow-x: auto;
+  padding: 2px 2px 10px;
+  margin-bottom: 2px;
+  scrollbar-width: none;
 }
 
-.scheme-tabs button {
+.day-tabs::-webkit-scrollbar { display: none; }
+
+.day-tabs button {
+  flex-shrink: 0;
   background: var(--card);
   border: 1.5px solid var(--border);
   color: var(--muted);
   border-radius: 14px;
-  padding: 12px 8px;
+  padding: 10px 14px;
   cursor: pointer;
-  font-size: 1rem;
-  font-weight: 800;
+  font-size: 0.82rem;
+  font-weight: 700;
   transition: all 0.2s;
 }
 
-.scheme-tabs button .sub { display: block; font-size: 0.62rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; color: var(--muted); margin-top: 2px; }
+.day-tabs button .sub { display: block; font-size: 0.6rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; margin-top: 2px; }
 
-.scheme-tabs button.active { border-color: var(--b); color: var(--b); background: rgba(78, 205, 196, 0.08); }
+.day-tabs button.active { border-color: var(--b); color: var(--b); background: rgba(78, 205, 196, 0.08); }
+.day-tabs button.today-marked { border-color: var(--warn); }
 
-.scheme-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+.scheme-meta { margin-bottom: 14px; }
 
 .group-title {
   font-size: 0.72rem;
@@ -308,7 +316,7 @@ main { max-width: 660px; margin: 0 auto; padding: 18px 16px 30px; }
 
 .ex-name { font-weight: 600; font-size: 0.92rem; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 
-.ex-sets { display: block; font-size: 0.78rem; color: var(--muted); margin-top: 1px; }
+.ex-reps { display: block; font-size: 0.78rem; color: var(--muted); margin-top: 1px; }
 
 .check {
   width: 24px; height: 24px;
@@ -359,33 +367,11 @@ main { max-width: 660px; margin: 0 auto; padding: 18px 16px 30px; }
 
 .ex-desc.open { display: block; }
 
-.meta-inputs { display: flex; gap: 6px; align-items: center; margin-top: 6px; }
-
-.meta-inputs label { font-size: 0.68rem; color: var(--muted); display: flex; align-items: center; gap: 4px; }
-
-.mini-input {
-  width: 48px;
-  background: var(--card);
-  border: 1px solid var(--border);
-  color: var(--text);
-  border-radius: 7px;
-  padding: 3px 5px;
-  font-size: 0.8rem;
-  text-align: center;
-  outline: none;
-}
-
-.mini-input:focus { border-color: var(--b); }
-
 .progress-row { display: flex; align-items: center; gap: 10px; margin: 14px 0 0; }
 
 .progress-track { flex: 1; height: 8px; background: var(--card-2); border-radius: 99px; overflow: hidden; }
 
-.progress-fill { height: 100%; width: 0; border-radius: 99px; transition: width 0.4s; }
-
-.fill-m { background: linear-gradient(90deg, var(--m), #a5d3ff); }
-.fill-a { background: linear-gradient(90deg, var(--a), #ff8e8e); }
-.fill-b { background: linear-gradient(90deg, var(--b), #7ee8e2); }
+.progress-fill { height: 100%; width: 0; border-radius: 99px; background: linear-gradient(90deg, var(--b), var(--ok)); transition: width 0.4s; }
 
 .progress-pct { font-size: 0.85rem; font-weight: 700; color: var(--muted); min-width: 38px; text-align: right; }
 
@@ -445,19 +431,6 @@ main { max-width: 660px; margin: 0 auto; padding: 18px 16px 30px; }
 
 .week-table .day-mark { text-align: right; font-size: 0.9rem; width: 34px; }
 
-.pill {
-  display: inline-block;
-  padding: 3px 10px;
-  border-radius: 999px;
-  font-size: 0.78rem;
-  font-weight: 700;
-}
-
-.pill-a { background: rgba(255, 107, 107, 0.15); color: var(--a); }
-.pill-b { background: rgba(78, 205, 196, 0.15); color: var(--b); }
-.pill-m { background: rgba(116, 185, 255, 0.15); color: var(--m); }
-.pill-rest { background: rgba(162, 155, 254, 0.15); color: var(--purple); }
-
 /* ---------- PAGINA TIMER ---------- */
 .timer-card { text-align: center; }
 
@@ -493,173 +466,7 @@ main { max-width: 660px; margin: 0 auto; padding: 18px 16px 30px; }
 
 .timer-controls { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
 
-.timer-select {
-  background: var(--card);
-  border: 1px solid var(--border);
-  color: var(--text);
-  padding: 8px 12px;
-  border-radius: 10px;
-  font-size: 0.85rem;
-  cursor: pointer;
-  margin-bottom: 12px;
-  max-width: 100%;
-}
-
-.reminder-row { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px; margin-bottom: 10px; }
-
-.switch { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; cursor: pointer; }
-
-.switch input { width: 18px; height: 18px; accent-color: var(--b); cursor: pointer; }
-
-.reminder-status { font-size: 0.8rem; color: var(--muted); margin-top: 8px; }
-
-/* ---------- PAGINA PROGRESSI ---------- */
-.sub-section h2 {
-  font-size: 0.72rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 1.2px;
-  color: var(--muted);
-  margin: 18px 4px 8px;
-}
-
-.sub-section:first-child h2 { margin-top: 0; }
-
-.heatmap { display: grid; grid-auto-flow: column; grid-template-rows: repeat(7, 14px); gap: 4px; justify-content: start; width: max-content; margin: 6px auto; }
-
-.heat-months { display: grid; grid-template-columns: repeat(9, 18px); width: max-content; margin: 0 auto; font-size: 0.62rem; color: var(--muted); height: 16px; }
-
-.heat-months span { text-align: left; padding-left: 2px; white-space: nowrap; }
-
-.heat-cell { width: 14px; height: 14px; border-radius: 3px; background: var(--card-2); border: 1px solid var(--border); }
-
-.heat-cell.l1 { background: rgba(78, 205, 196, 0.35); border-color: var(--b); }
-.heat-cell.l2 { background: rgba(85, 239, 196, 0.6); border-color: var(--ok); }
-.heat-cell.l3 { background: var(--ok); border-color: var(--ok); }
-.heat-cell.today { outline: 2px solid var(--m); outline-offset: 1px; }
-.heat-cell.future { opacity: 0.3; }
-
-.heat-legend { display: flex; align-items: center; gap: 6px; margin-top: 10px; font-size: 0.75rem; color: var(--muted); justify-content: flex-end; }
-
-.heat-legend .heat-cell { display: inline-block; }
-
-.weight-form { display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
-
-.weight-form input[type="date"] {
-  background: var(--card);
-  border: 1px solid var(--border);
-  color: var(--text);
-  border-radius: 10px;
-  padding: 7px 10px;
-  font-size: 0.85rem;
-  color-scheme: dark;
-  outline: none;
-}
-
-html[data-theme="light"] .weight-form input[type="date"] { color-scheme: light; }
-
-.weight-form .kg-input {
-  width: 90px;
-  background: var(--card);
-  border: 1px solid var(--border);
-  color: var(--text);
-  border-radius: 10px;
-  padding: 7px 10px;
-  font-size: 1rem;
-  text-align: center;
-  outline: none;
-}
-
-.weight-form .kg-input:focus { border-color: var(--b); }
-
-.weight-chart { display: flex; align-items: flex-end; gap: 8px; height: 140px; padding: 10px 6px 0; background: var(--card-2); border-radius: 12px; overflow-x: auto; min-height: 120px; }
-
-.w-col { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; flex: 1; min-width: 34px; }
-
-.w-val { font-size: 0.62rem; color: var(--muted); margin-bottom: 3px; white-space: nowrap; }
-
-.w-bar { width: 100%; max-width: 30px; border-radius: 6px 6px 2px 2px; background: linear-gradient(180deg, var(--b), var(--m)); transition: height 0.4s; }
-
-.w-col.today .w-bar { outline: 2px solid var(--warn); outline-offset: 1px; }
-
-.w-date { font-size: 0.58rem; color: var(--muted); margin-top: 4px; white-space: nowrap; }
-
-.w-empty { color: var(--muted); font-size: 0.9rem; text-align: center; padding: 22px 0; }
-
-.weight-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin: 14px 0; }
-
-.history-list { display: flex; flex-direction: column; }
-
-.history-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 9px 4px;
-  border-bottom: 1px solid var(--border);
-  font-size: 0.9rem;
-}
-
-.history-item:last-child { border-bottom: none; }
-
-.history-item .date { font-weight: 700; }
-.history-item .type { font-size: 0.75rem; color: var(--muted); }
-
-.empty { color: var(--muted); font-size: 0.9rem; margin-top: 8px; text-align: center; padding: 14px 0; }
-
-.danger-btn {
-  margin-top: 10px;
-  padding: 7px 16px;
-  border-radius: 10px;
-  border: 1px solid rgba(255, 107, 107, 0.4);
-  background: transparent;
-  color: var(--a);
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 0.82rem;
-}
-
-.danger-btn:hover { background: rgba(255, 107, 107, 0.1); }
-
-.del-btn {
-  background: transparent;
-  border: 1px solid transparent;
-  color: var(--muted);
-  width: 24px; height: 24px;
-  border-radius: 7px;
-  cursor: pointer;
-  font-size: 0.8rem;
-  line-height: 1;
-}
-
-.del-btn:hover { color: var(--a); border-color: rgba(255, 107, 107, 0.4); }
-
 /* ---------- PAGINA CONSIGLI ---------- */
-.steps { counter-reset: step; list-style: none; }
-
-.steps li {
-  position: relative;
-  padding: 9px 0 9px 38px;
-  font-size: 0.92rem;
-  border-bottom: 1px dashed var(--border);
-}
-
-.steps li:last-child { border-bottom: none; }
-
-.steps li::before {
-  counter-increment: step;
-  content: counter(step);
-  position: absolute;
-  left: 0; top: 9px;
-  width: 26px; height: 26px;
-  border-radius: 50%;
-  background: var(--b);
-  color: #06231f;
-  font-weight: 800;
-  font-size: 0.85rem;
-  display: grid;
-  place-items: center;
-}
-
 .tip { display: flex; gap: 10px; padding: 10px 0; border-bottom: 1px dashed var(--border); font-size: 0.9rem; }
 
 .tip:last-child { border-bottom: none; }
@@ -740,9 +547,11 @@ html[data-theme="light"] .weight-form input[type="date"] { color-scheme: light; 
 
 .guide-body { flex: 1; display: flex; flex-direction: column; }
 
+.guide-circuit { text-align: center; font-size: 0.78rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--m); margin-bottom: 14px; }
+
 .guide-ex { font-size: 1.5rem; font-weight: 800; line-height: 1.25; margin: 6px 0 4px; text-align: center; }
 
-.guide-sets { text-align: center; font-size: 1.1rem; font-weight: 700; color: var(--b); margin-bottom: 4px; }
+.guide-reps { text-align: center; font-size: 1.15rem; font-weight: 700; color: var(--b); margin-bottom: 4px; }
 
 .guide-info { text-align: center; font-size: 0.85rem; color: var(--muted); margin-bottom: 14px; }
 
@@ -819,7 +628,7 @@ html[data-theme="light"] .weight-form input[type="date"] { color-scheme: light; 
 
 .guide-summary p { color: var(--muted); margin-bottom: 18px; }
 
-/* ---------- BANNER IOS / CONFETTI / VARI ---------- */
+/* ---------- VARI ---------- */
 .ios-banner {
   display: flex;
   align-items: center;
@@ -858,8 +667,8 @@ footer { text-align: center; margin: 26px 0 10px; color: var(--muted); font-size
 @media (max-width: 480px) {
   main { padding: 14px 12px 24px; }
 
-  .tabbar button { font-size: 0.6rem; min-height: 52px; padding-bottom: 8px; }
-  .tabbar button .ico { font-size: 1.15rem; }
+  .tabbar button { font-size: 0.62rem; min-height: 52px; padding-bottom: 8px; }
+  .tabbar button .ico { font-size: 1.2rem; }
 
   .stats-row { gap: 6px; }
 
@@ -871,22 +680,16 @@ footer { text-align: center; margin: 26px 0 10px; color: var(--muted); font-size
 
   .timer-display { font-size: 2.4rem; }
 
-  .week-table td { padding: 10px 8px; font-size: 0.88rem; }
+  .week-table td { padding: 10px 8px; font-size: 0.86rem; }
   .week-table .day-name { white-space: normal; }
-  .pill { font-size: 0.74rem; padding: 2px 8px; }
 
   .ex-item { padding: 9px 10px; }
   .ex-name { font-size: 0.88rem; }
 
-  .mini-input { font-size: 16px; }
-
-  .scheme-tabs button { padding: 10px 4px; font-size: 0.95rem; }
-  .scheme-tabs button .sub { font-size: 0.55rem; }
+  .day-tabs button { padding: 9px 12px; }
 
   .guide-ex { font-size: 1.3rem; }
   .guide-rest-time { font-size: 3.2rem; }
-
-  .weight-stats { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 360px) {
@@ -894,8 +697,8 @@ footer { text-align: center; margin: 26px 0 10px; color: var(--muted); font-size
   .appbar h1 { font-size: 0.92rem; }
   .appbar button { padding: 6px 9px; font-size: 0.82rem; }
 
-  .tabbar button { font-size: 0.56rem; }
-  .tabbar button .ico { font-size: 1.05rem; }
+  .tabbar button { font-size: 0.58rem; }
+  .tabbar button .ico { font-size: 1.1rem; }
 
   .stat .num { font-size: 1.15rem; }
   .stat .lbl { font-size: 0.6rem; }
@@ -908,7 +711,7 @@ footer { text-align: center; margin: 26px 0 10px; color: var(--muted); font-size
 /* ---------- STAMPA ---------- */
 @media print {
   body { background: #fff; color: #111; padding: 0; }
-  .appbar, .tabbar, .check, .info-btn, .meta-inputs, .ex-desc, .complete-btn, .guide-overlay, .ios-banner, .confetti, .danger-btn, .stats-row, .chips, .action-row, .scheme-tabs, .del-btn, .weight-form { display: none !important; }
+  .appbar, .tabbar, .check, .info-btn, .ex-desc, .complete-btn, .guide-overlay, .ios-banner, .confetti, .stats-row, .chips, .action-row, .day-tabs, .progress-row { display: none !important; }
   .page { display: block !important; }
   .card { border-color: #ccc; background: #fff; }
   .ex-item { background: #f5f5f5; }
@@ -945,9 +748,8 @@ footer { text-align: center; margin: 26px 0 10px; color: var(--muted); font-size
         <div class="lbl">Questa settimana</div>
       </div>
       <div class="stat">
-        <div class="num" id="statPct">—</div>
-        <div class="lbl">Aderenza</div>
-        <div class="bar"><div id="statBar"></div></div>
+        <div class="num" id="statToday">—</div>
+        <div class="lbl">Oggi</div>
       </div>
     </div>
     <div class="card" id="oggiToday"></div>
@@ -955,11 +757,7 @@ footer { text-align: center; margin: 26px 0 10px; color: var(--muted); font-size
 
   <!-- ============ PAGINA SCHEDE ============ -->
   <section class="page" id="page-schede">
-    <div class="scheme-tabs" id="schemeTabs">
-      <button data-scheme="M" class="active"><span class="sub">Scheda</span>M<span class="sub">Mattina</span></button>
-      <button data-scheme="A"><span class="sub">Scheda</span>A<span class="sub">Petto · Spalle · Bicipiti</span></button>
-      <button data-scheme="B"><span class="sub">Scheda</span>B<span class="sub">Addome · Schiena · Tricipiti</span></button>
-    </div>
+    <div class="day-tabs" id="dayTabs"></div>
     <div id="schedeCard"></div>
   </section>
 
@@ -972,11 +770,11 @@ footer { text-align: center; margin: 26px 0 10px; color: var(--muted); font-size
     <div class="card">
       <div class="card-head"><h2>🗓️ Organizzazione</h2></div>
       <div class="chips" style="margin-bottom:10px;">
-        <span class="chip">Petto · Bicipiti · Spalle — 2×/settimana</span>
-        <span class="chip">Addominali · Schiena · Tricipiti — 2×/settimana</span>
-        <span class="chip">Scheda M — ogni giorno</span>
+        <span class="chip">6 giorni di allenamento</span>
+        <span class="chip">+1 di recupero attivo</span>
+        <span class="chip">Focus: petto · braccia · addome · tiro con l'arco</span>
       </div>
-      <p class="muted small">Questa organizzazione allena i principali gruppi muscolari due volte a settimana, in linea con le indicazioni generali sull'attività di rafforzamento muscolare.</p>
+      <p class="muted small">Ogni giorno è composto da circuiti: esegui tutti gli esercizi del circuito, poi ripeti per il numero di giri indicato, rispettando i tempi di recupero.</p>
     </div>
   </section>
 
@@ -986,11 +784,11 @@ footer { text-align: center; margin: 26px 0 10px; color: var(--muted); font-size
       <h3>⏳ Timer riposo tra serie</h3>
       <div class="presets" id="restPresets">
         <button class="preset-btn" data-s="60">60s</button>
-        <button class="preset-btn active" data-s="90">90s</button>
-        <button class="preset-btn" data-s="120">120s</button>
-        <button class="preset-btn" data-s="180">3 min</button>
+        <button class="preset-btn active" data-s="75">75s</button>
+        <button class="preset-btn" data-s="90">90s</button>
+        <button class="preset-btn" data-s="120">2 min</button>
       </div>
-      <div class="timer-display" id="restDisplay">01:30</div>
+      <div class="timer-display" id="restDisplay">01:15</div>
       <div class="timer-controls">
         <button class="btn primary" id="restStart">▶ Avvia</button>
         <button class="btn" id="restReset">↺ Reset</button>
@@ -998,90 +796,11 @@ footer { text-align: center; margin: 26px 0 10px; color: var(--muted); font-size
     </div>
 
     <div class="card timer-card">
-      <h3>🌅 Cronometro scheda M</h3>
-      <div class="timer-display" id="morningDisplay">10:00</div>
-      <div class="timer-controls">
-        <button class="btn primary" id="morningStart">▶ Avvia</button>
-        <button class="btn" id="morningReset">↺ Reset</button>
-      </div>
-    </div>
-
-    <div class="card timer-card">
-      <h3>🔔 Promemoria routine mattutina</h3>
-      <div class="reminder-row">
-        <label class="switch"><input type="checkbox" id="remEnable"> Abilita</label>
-        <input type="time" class="mini-input" id="remTime" value="07:00" style="width:auto; padding:6px 10px; font-size:0.9rem;">
-        <button class="btn small" id="remTest">Prova</button>
-      </div>
-      <p class="reminder-status" id="remStatus">Promemoria disattivato.</p>
-    </div>
-
-    <div class="card timer-card">
       <h3>🏋️ Cronometro sessione</h3>
       <div class="timer-display" id="sessDisplay">00:00</div>
-      <select class="timer-select" id="sessType">
-        <option value="A">Scheda A · Petto, bicipiti e spalle</option>
-        <option value="B">Scheda B · Addominali, schiena e tricipiti</option>
-        <option value="M">🌅 Scheda M · Mattina</option>
-      </select>
       <div class="timer-controls">
         <button class="btn primary" id="sessStart">▶ Avvia</button>
         <button class="btn" id="sessReset">↺ Reset</button>
-        <button class="btn" id="sessSave">💾 Salva tempo</button>
-      </div>
-      <p class="reminder-status" id="sessHint">Il tempo salvato finisce in “Tempi sessione”.</p>
-    </div>
-  </section>
-
-  <!-- ============ PAGINA PROGRESSI ============ -->
-  <section class="page" id="page-progressi">
-    <div class="sub-section">
-      <h2>🔥 Costanza</h2>
-      <div class="card">
-        <div class="heat-months" id="heatMonths"></div>
-        <div class="heatmap" id="heatmap"></div>
-        <div class="heat-legend">
-          <span>Meno</span>
-          <span class="heat-cell"></span>
-          <span class="heat-cell l1"></span>
-          <span class="heat-cell l2"></span>
-          <span class="heat-cell l3"></span>
-          <span>Più</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="sub-section">
-      <h2>⚖️ Peso corporeo</h2>
-      <div class="card">
-        <div class="weight-form">
-          <input class="kg-input" id="wInput" placeholder="72,5" inputmode="decimal"> <span class="muted">kg</span>
-          <input type="date" id="wDate">
-          <button class="btn primary" id="wSave">💾 Salva</button>
-        </div>
-        <div class="weight-chart" id="wChart"><div class="w-empty">Nessun dato ancora — registra il tuo primo peso! ⚖️</div></div>
-        <div class="weight-stats" id="wStats"></div>
-        <div class="history-list" id="wList"></div>
-        <button class="danger-btn" id="wReset">🗑 Azzera peso</button>
-      </div>
-    </div>
-
-    <div class="sub-section">
-      <h2>📖 Storico allenamenti</h2>
-      <div class="card">
-        <div class="history-list" id="historyList"></div>
-        <p class="empty" id="historyEmpty">Nessuna sessione completata finora. Inizia spuntando gli esercizi e premi “Completa sessione”! 💪</p>
-        <button class="danger-btn" id="historyReset">🗑 Azzera storico</button>
-      </div>
-    </div>
-
-    <div class="sub-section">
-      <h2>⏲️ Tempi sessione</h2>
-      <div class="card">
-        <div class="stats-row" id="sessStats"></div>
-        <div class="history-list" id="sessList"></div>
-        <p class="empty" id="sessEmpty">Nessun tempo registrato. Usa il cronometro sessione e premi “💾 Salva tempo”.</p>
-        <button class="danger-btn" id="sessResetAll">🗑 Azzera tempi</button>
       </div>
     </div>
   </section>
@@ -1089,24 +808,12 @@ footer { text-align: center; margin: 26px 0 10px; color: var(--muted); font-size
   <!-- ============ PAGINA CONSIGLI ============ -->
   <section class="page" id="page-consigli">
     <div class="card">
-      <div class="card-head"><h2>📈 Come aumentare la difficoltà</h2></div>
-      <p class="muted small" style="margin-bottom:8px;">Quando completi tutte le serie arrivando al numero massimo di ripetizioni con tecnica pulita:</p>
-      <ol class="steps">
-        <li>Aggiungi <strong>2–3 ripetizioni</strong> per serie.</li>
-        <li>Poi <strong>rallenta la discesa</strong> (3 secondi).</li>
-        <li>Poi aggiungi una <strong>pausa nel punto più difficile</strong> (1 secondo).</li>
-        <li>Infine passa a una <strong>variante più complessa</strong> dell'esercizio.</li>
-      </ol>
-    </div>
-
-    <div class="card">
       <div class="card-head"><h2>💡 Consigli per migliorare</h2></div>
-      <div class="tip"><span class="icon">⏳</span><p><strong>Recupera bene</strong>60–90s tra le serie, 2 minuti dopo gli esercizi più impegnativi.</p></div>
-      <div class="tip"><span class="icon">📈</span><p><strong>Progressione lenta</strong>Ogni settimana aumenta una sola cosa: 1–2 ripetizioni, una serie, o più tempo sotto tensione.</p></div>
-      <div class="tip"><span class="icon">🚫</span><p><strong>Non esagerare</strong>Non allenare intensamente lo stesso gruppo muscolare due giorni di fila.</p></div>
+      <div class="tip"><span class="icon">⏳</span><p><strong>Recupera bene</strong>60–75" tra i giri, un po' di più nei circuiti più pesanti. Il recupero fa parte dell'allenamento.</p></div>
+      <div class="tip"><span class="icon">📈</span><p><strong>Progressione</strong>Quando completi tutte le ripetizioni con tecnica pulita, aggiungi 2–3 ripetizioni o rallenta il movimento.</p></div>
+      <div class="tip"><span class="icon">🦴</span><p><strong>Spalle sane</strong>Face pull, retrazioni e pallof press proteggono le spalle: sono il lavoro più importante per il tiro con l'arco.</p></div>
+      <div class="tip"><span class="icon">🎯</span><p><strong>Tecnica prima di tutto</strong>Niente slancio: muovi solo il segmento giusto e controlla la fase di ritorno (l'elastico non deve 'strapparti').</p></div>
       <div class="tip"><span class="icon">😴</span><p><strong>Recupero &amp; alimentazione</strong>Dormi circa 8 ore e mangia abbastanza: evita una dieta ipocalorica aggressiva.</p></div>
-      <div class="tip"><span class="icon">🧘</span><p><strong>Posizione del collo</strong>Mantieni il collo “allungato” senza spingerlo forzatamente indietro; pensa a portare leggermente il mento indietro, non verso il petto.</p></div>
-      <div class="tip"><span class="icon">🦴</span><p><strong>Postura</strong>Durante rematore e face pull porta le scapole indietro e verso il basso, senza alzare le spalle verso le orecchie: allenare solo il petto potrebbe favorire spalle più chiuse.</p></div>
       <div class="tip"><span class="icon">🛑</span><p><strong>Stai in ascolto</strong>Interrompi l'esercizio se compaiono dolore toracico, vertigini, palpitazioni, mancanza d'aria insolita o dolore articolare.</p></div>
     </div>
 
@@ -1124,7 +831,6 @@ footer { text-align: center; margin: 26px 0 10px; color: var(--muted); font-size
   <button data-page="schede"><span class="ico">📋</span>Schede</button>
   <button data-page="piano"><span class="ico">📅</span>Piano</button>
   <button data-page="timer"><span class="ico">⏱️</span>Timer</button>
-  <button data-page="progressi"><span class="ico">📊</span>Progressi</button>
   <button data-page="consigli"><span class="ico">💡</span>Consigli</button>
 </nav>
 
@@ -1148,119 +854,207 @@ footer { text-align: center; margin: 26px 0 10px; color: var(--muted); font-size
 (() => {
   'use strict';
 
-  /* ================= DATI ================= */
+  /* ================= SPIEGAZIONI ESERCIZI ================= */
 
-  const SCHEMES = {
-    M: {
-      tag: 'M', tagClass: 'tag-m', fill: 'fill-m',
-      title: 'Mattina e recupero',
-      meta: ['10–15 minuti', 'Ogni giorno', 'Leggera — senza fatica'],
-      rest: 30,
-      note: { cls: 'note-blue', text: 'La scheda M non deve affaticarti: serve a mobilità, respirazione e postura. Nei wall angels tieni il movimento controllato e non forzare le braccia contro il muro. Nel chin tuck non piegare la testa verso il basso: immagina di spingere il mento leggermente indietro.' },
-      groups: [
-        {
-          name: 'Mobilità, respirazione e postura',
-          items: [
-            ['🌬️ Respirazione diaframmatica', '2 × 8 respiri profondi', 'Sdraiati sulla schiena con le ginocchia piegate, una mano sul petto e una sulla pancia. Inspira dal naso facendo gonfiare la pancia (la mano sul petto resta ferma) ed espira lentamente dalla bocca.'],
-            ['🐈 Cat-cow', '2 × 8 ripetizioni', 'A quattro zampe, mani sotto le spalle e ginocchia sotto il bacino. Inspira e inarca la schiena verso il basso portando lo sguardo in alto (cow). Espira e arrotonda la schiena verso l\'alto come un gatto, portando il mento al petto. Movimento lento e fluido, seguendo il respiro.'],
-            ['🧱 Wall angels', '2 × 10 ripetizioni', 'In piedi con schiena, nuca e braccia contro il muro, talloni a pochi cm dalla parete. Parti con i gomiti piegati a 90° (posizione a W), poi fai scorrere le braccia verso l\'alto formando una Y, mantenendo polsi e gomiti a contatto col muro quanto più possibile. Torna giù lentamente. Movimento controllato: se la schiena si stacca, riduci l\'ampiezza.'],
-            ['👤 Chin tucks (retrazioni del mento)', '2 × 10 · 3s di tenuta', 'In piedi o seduto con la testa dritta e lo sguardo avanti. Porta il mento indietro in orizzontale, come se volessi creare un "doppio mento", senza inclinare la testa né in alto né in basso. Mantieni 3 secondi e rilascia.'],
-            ['🦴 Retrazioni delle scapole', '2 × 12 · 3s di tenuta', 'In piedi con le braccia lungo i fianchi. Porta le scapole indietro e verso il basso, come se volessi metterle nelle tasche posteriori, senza alzare le spalle verso le orecchie. Mantieni 3 secondi e rilascia.'],
-            ['🚪 Stretching del petto alla porta', '2 × 25s per lato', 'In piedi in una porta, appoggia avambraccio e mano allo stipite con il gomito a 90°. Ruota lentamente il corpo in avanti verso il lato opposto finché senti un allungamento nel petto, senza dolore. Tieni 25 secondi respirando con calma, poi cambia lato.'],
-            ['🔄 Rotazioni toraciche da quadrupedia', '2 × 8 per lato', 'A quattro zampe con la schiena neutra. Porta una mano dietro la nuca e ruota il busto verso quel lato, aprendo il gomito verso il soffitto, poi torna al centro. Movimento lento e controllato, alterna i lati.'],
-            ['🍑 Glute bridge leggero', '2 × 15 ripetizioni', 'Sdraiato sulla schiena con le ginocchia piegate e i piedi a terra, braccia lungo i fianchi. Spingi sui talloni sollevando il bacino finché spalle, bacino e ginocchia formano una linea retta, contrai i glutei in alto per un secondo, poi scendi lentamente. Leggero, senza arrivare alla fatica.']
-          ]
-        }
-      ]
-    },
-
-    A: {
-      tag: 'A', tagClass: 'tag-a', fill: 'fill-a',
-      title: 'Petto, bicipiti e spalle',
-      meta: ['40–55 minuti', '2 volte a settimana', 'Recupero 60–90s'],
-      rest: 90,
-      note: { cls: 'note-blue', text: 'Non inarcare la schiena durante shoulder press e curl. Se i 3 kg diventano facili, rallenta la discesa a 3 secondi e fermati 1 secondo nella contrazione.' },
-      groups: [
-        {
-          name: 'Petto',
-          items: [
-            ['Piegamenti a terra', '4 × 6–15', 'Mani leggermente più larghe delle spalle, corpo in linea retta da testa a talloni, core attivo. Scendi piegando i gomiti a circa 45° dal busto finché il petto sfiora il pavimento, poi spingi per risalire senza inarcare la schiena. Troppo difficili? Mani su un tavolo stabile. Troppo facili? Discesa lenta o piedi su un rialzo basso.'],
-            ['Distensioni con manubri da 3 kg sul pavimento', '4 × 10–20', 'Sdraiato sulla schiena con le ginocchia piegate e i piedi a terra, manubri da 3 kg all\'altezza del petto con i palmi in avanti. Spingili verso l\'alto finché le braccia sono distese, poi scendi lentamente fino a sfiorare il pavimento. Il pavimento limita l\'escursione: resta vicino al petto per mantenere la tensione.'],
-            ['Piegamenti con discesa lenta', '3 × 6–12', 'Come i piegamenti normali ma scendi in 3–4 secondi, mantenendo il corpo in linea retta, e risali in circa 1 secondo. Rallentare la discesa aumenta il tempo sotto tensione senza aggiungere carico.'],
-            ['Squeeze press con manubri', '3 × 12–20', 'Sdraiato sulla schiena con i manubri da 3 kg all\'altezza del petto. Spingili verso l\'alto tenendoli premuti tra loro (i pollici si toccano) e mantieni la compressione per tutta la serie. Scendi lentamente e ripeti.']
-          ]
-        },
-        {
-          name: 'Spalle',
-          items: [
-            ['Shoulder press con manubri', '3 × 10–15', 'In piedi o seduto, manubri all\'altezza delle spalle con i palmi in avanti. Spingili verso l\'alto finché le braccia sono distese sopra la testa, poi scendi lentamente all\'altezza delle spalle. Core attivo, non inarcare la schiena.'],
-            ['Alzate laterali', '3 × 12–20', 'In piedi, manubri lungo i fianchi e gomiti leggermente flessi. Alza le braccia lateralmente fino all\'altezza delle spalle con i pollici leggermente verso il basso. Scendi lentamente: lo slancio non conta, la tensione sì.'],
-            ['Alzate frontali con elastico o manubri', '2 × 12–15', 'In piedi, mani all\'altezza delle cosce. Solleva le braccia tese davanti a te fino all\'altezza delle spalle (o con l\'elastico sotto i piedi), mantenendo il busto fermo, poi scendi lentamente.']
-          ]
-        },
-        {
-          name: 'Bicipiti',
-          items: [
-            ['Curl alternato con manubri', '3 × 10–20 per braccio', 'In piedi, manubri lungo i fianchi con i palmi in avanti. Fletti un gomito alla volta portando il manubrio verso la spalla senza allontanare il braccio dal busto, poi scendi lentamente. Niente slancio: il movimento è lento e controllato.'],
-            ['Curl con elastico', '3 × 12–20', 'In piedi sull\'elastico, maniglie ai fianchi. Fletti i gomiti portando le mani verso le spalle mantenendo i gomiti fermi ai lati, poi torna lentamente senza perdere tensione.'],
-            ['Curl isometrico', '2 × 20–30 secondi', 'In piedi con i gomiti piegati a circa 90° e i manubri davanti a te. Mantieni la posizione senza muoverti, contraendo i bicipiti, per 20–30 secondi. Respira normalmente.']
-          ]
-        }
-      ]
-    },
-
-    B: {
-      tag: 'B', tagClass: 'tag-b', fill: 'fill-b',
-      title: 'Addominali, schiena e tricipiti',
-      meta: ['40–55 minuti', '2 volte a settimana', 'Recupero 60–90s'],
-      rest: 90,
-      note: { cls: 'note-yellow', text: 'Meglio eseguire meno ripetizioni con la schiena stabile piuttosto che fare molti crunch velocemente. Se senti la zona lombare, riduci la difficoltà del dead bug o dell\'hollow hold. Evita i dips tra due sedie: a casa possono essere instabili e caricare molto le spalle.' },
-      groups: [
-        {
-          name: 'Schiena e postura',
-          items: [
-            ['Rematore con elastico', '4 × 12–20', 'Seduto a terra con le gambe distese e l\'elastico sotto i piedi. Tira le maniglie verso il busto portando i gomiti indietro e stringendo le scapole, poi torna lentamente senza lasciare che l\'elastico perda tensione.'],
-            ['Rematore con manubri', '4 × 10–20', 'Busto inclinato in avanti con la schiena dritta, manubri appesi sotto le spalle. Tira i gomiti verso il bacino portando i manubri ai fianchi e stringendo le scapole, poi scendi in modo controllato. Il busto non deve muoversi.'],
-            ['Face pull con elastico', '3 × 12–20', 'Fissa l\'elastico all\'altezza del viso o poco sopra. Tira le estremità verso il viso separando le mani lateralmente (gomiti alti), come se volessi dividere la corda in due, e stringi bene dietro le spalle. Torna lentamente alla posizione di partenza.'],
-            ['Band pull-apart', '3 × 15–25', 'In piedi, braccia tese davanti a te con l\'elastico in tensione all\'altezza del petto. Allarga le braccia lateralmente portando l\'elastico verso il petto e stringendo le scapole, poi torna lentamente mantenendo la tensione.'],
-            ['Reverse fly con manubri', '3 × 12–20', 'Busto inclinato in avanti, schiena dritta, manubri sotto il petto con i palmi uno di fronte all\'altro. Apri le braccia lateralmente come un\'aquila fino all\'altezza delle spalle, stringendo le scapole, poi torna lentamente. Gomiti leggermente flessi.']
-          ]
-        },
-        {
-          name: 'Addominali e core',
-          items: [
-            ['Dead bug', '3 × 8–12 per lato', 'Sdraiato sulla schiena, braccia verso il soffitto e gambe piegate a 90° con le ginocchia sopra il bacino. Distendi lentamente il braccio destro dietro la testa e la gamba sinistra verso il pavimento senza toccarlo, mantenendo la schiena a terra. Torna al centro e alterna i lati.'],
-            ['Plank', '3 × 20–50 secondi', 'Sugli avambracci e sulle punte dei piedi, gomiti sotto le spalle. Il corpo forma una linea retta da testa a talloni: non far cadere il bacino né alzarlo troppo, contrai glutei e addominali. Respira normalmente. Troppo difficile? Appoggia le ginocchia a terra.'],
-            ['Side plank', '3 × 20–40s per lato', 'Sdraiato sul fianco con l\'avambraccio a terra sotto la spalla e i piedi impilati (o incrociati se difficile). Solleva il bacino fino a formare una linea retta dalla testa ai piedi e mantieni respirando. Poi cambia lato.'],
-            ['Bird dog', '3 × 8–12 per lato', 'A quattro zampe con la schiena neutra. Distendi contemporaneamente il braccio destro in avanti e la gamba sinistra indietro, allineati al busto, mantenendo il bacino fermo e stabile. Torna al centro e alterna i lati.'],
-            ['Hollow hold semplificato', '2 × 15–30 secondi', 'Sdraiato sulla schiena, braccia distese dietro la testa e ginocchia piegate a 90°. Solleva leggermente spalle e piedi da terra (la zona lombare resta appoggiata), contrai gli addominali e mantieni respirando. Troppo difficile? Piedi a terra e solleva solo le spalle.']
-          ]
-        },
-        {
-          name: 'Tricipiti',
-          items: [
-            ['Estensioni sopra la testa con un manubrio', '3 × 10–20', 'In piedi o seduto, tieni un manubrio con entrambe le mani sopra la testa, gomiti vicini alle orecchie. Piega i gomiti facendo scendere il manubrio dietro la nuca, poi distendi le braccia per tornare su. Gomiti fermi, non si allargano.'],
-            ['Push-down con elastico', '3 × 12–20', 'Fissa l\'elastico in alto (o a una maniglia stabile) e tienilo con i gomiti piegati a 90° ai fianchi. Distendi le braccia verso il basso fino in fondo, mantenendo i gomiti fermi al busto, poi torna lentamente.'],
-            ['Piegamenti stretti', '2–3 × 6–15', 'Come i piegamenti normali ma con le mani sotto le spalle, dita in avanti, gomiti vicini al busto durante la discesa. Colpiscono soprattutto i tricipiti.']
-          ]
-        }
-      ]
-    }
+  const EX = {
+    'Push-up classici': 'Plank con mani poco più larghe delle spalle, corpo dritto da testa a piedi, addome e glutei contratti, gomiti a ~45° dal busto. Scendi finché il petto è quasi a terra, poi spingi su. Trucchi: non inarcare la schiena né alzare il sedere; se difficile → ginocchia a terra; se facile → discesa lenta 3" + pausa 1" in basso.',
+    'Diamond push-up': 'Come i push-up classici ma mani vicine sotto il petto, pollici e indici quasi a formare un diamante, gomiti vicini al corpo. Scendi finché il petto è vicino alle mani, poi spingi su. Trucchi: core contratto per non dondolare; ginocchia a terra se troppo difficile.',
+    'Croci con elastico': 'Elastico fisso all\'altezza del petto (maniglia, gancio), un passo indietro per creare tensione, braccia tese ai lati con gomiti leggermente flessi. Porta le mani verso il centro del petto come per abbracciare qualcosa, strizza il petto 1" quando si incontrano, poi torna lentamente. Trucchi: muovi solo le braccia; controlla il ritorno, non farti strappare dall\'elastico.',
+    'Push-up su piano rialzato': 'Mani su un piano stabile leggermente più alto dei piedi (bordo del letto, sedia robusta, tavolo basso), corpo dritto come un plank inclinato. Esegui il push-up normale. Trucchi: più alto è il piano, più facile è; controlla la discesa, non "cadere" giù.',
+    'Push-up con pausa in basso': 'Come un push-up normale, ma quando sei in basso (petto vicino a terra) fermati 2 secondi prima di spingere su. Trucchi: corpo dritto anche durante la pausa; inspira in discesa, espira spingendo.',
+    'French press con elastico': 'Braccia sopra la testa, gomiti vicini alle orecchie, elastico teso (estremità sotto i piedi o mano "ancora" dietro la schiena). Piega i gomiti portando le mani dietro la testa, poi distendi. Variante con pesi da 3 kg: stesso movimento con il peso tenuto a due mani. Trucchi: gomiti fermi, non vanno avanti/indietro; discesa lenta.',
+    'Estensioni tricipiti dietro la testa': 'Elastico fisso in alto (sopra la testa), mani vicino alla testa con gomiti flessi: distendi le braccia verso il basso/indietro e torna controllato. Oppure tieni un\'estremità dietro la schiena e distendi con l\'altra mano. Trucchi: gomiti vicini alla testa; contrazione forte a braccio disteso.',
+    'Push-down con elastico': 'Elastico fisso in alto, gomiti flessi a 90° e vicini ai fianchi. Spingi le mani verso il basso distendendo i gomiti, poi risali lentamente. Trucchi: gomiti incollati ai fianchi, non vanno in avanti; movimento controllato, niente strattoni.',
+    'Crunch': 'Sdraiato sul tappetino, ginocchia piegate, piedi a terra, mani dietro la testa o incrociate sul petto. Solleva spalle e parte alta del dorso contraendo l\'addome, poi torna giù controllato. Trucchi: non tirare il collo con le mani; pensa ad "avvicinare le costole al bacino", non a staccare la testa.',
+    'Reverse crunch': 'Sdraiato, gambe sollevate con ginocchia piegate a 90°, mani lungo i fianchi o sotto i glutei. Contrai l\'addome e porta le ginocchia verso il petto sollevando leggermente il bacino, poi torna giù controllato. Trucchi: movimento piccolo e controllato; non lanciare le gambe.',
+    'Plank': 'Su gomiti e punte dei piedi, gomiti sotto le spalle, corpo dritto da testa a piedi, addome e glutei contratti. Mantieni senza inarcare la schiena né alzare il sedere. Trucchi: respira normalmente; immagina di accorciare la distanza ombelico-pube.',
+    'Side plank': 'Sdraiato su un fianco, gomito sotto la spalla e bordo del piede a terra. Solleva il bacino finché il corpo è dritto in linea laterale, mantieni respirando, poi cambia lato. Trucchi: non lasciar cadere il bacino; contrai glutei e addome.',
+    'Rematore con elastico': 'Elastico fisso all\'altezza del petto, un passo indietro per tensione, braccia tese davanti. Tira i gomiti indietro portando le mani verso i fianchi e strizzando le scapole, poi torna lentamente. Trucchi: busto fermo, non dondolare; pensa a "unire le scapole".',
+    'Rematore veloce (elastico)': 'Come il rematore con elastico ma con ritmo veloce e controllato, mantenendo la tensione per tutta la durata. Trucchi: il busto resta fermo; ampiezza piena anche veloce.',
+    'Trazioni simulate con elastico': 'Elastico fisso in alto (porta robusta, gancio), braccia tese sopra la testa. Tira i gomiti verso il basso e indietro portando le mani verso le clavicole, controlla il ritorno. Trucchi: petto alto, non inarcare troppo; immagina di "mettere i gomiti nelle tasche posteriori".',
+    'Face pull': 'Elastico all\'altezza del viso o poco sopra, braccia tese davanti. Tira verso il viso portando le mani ai lati della testa con gomiti alti e indietro, strizza le scapole, poi torna lentamente. Trucchi: gomiti alti, non bassi; fondamentale per salute delle spalle e tiro con l\'arco.',
+    'Pull-down con elastico sopra la testa': 'In ginocchio o seduto, elastico fisso sopra la testa, braccia tese in su. Tira i gomiti verso il basso e indietro portando le mani verso spalle/alto petto, torna su lentamente. Trucchi: busto fermo, non dondolare; contrai la schiena a gomiti bassi.',
+    'Curl bicipiti (presa larga)': 'Elastico sotto i piedi o a un punto basso, braccia tese lungo i fianchi, palmi in avanti. Piega i gomiti portando le mani verso le spalle, poi torna giù controllato. Trucchi: gomiti fermi vicino ai fianchi; contrazione forte in alto.',
+    'Curl bicipiti martello': 'Come il curl normale ma con i palmi che si guardano (presa a martello). Piega i gomiti portando le mani verso le spalle, torna giù. Trucchi: movimento controllato, niente strattoni; dà spessore al braccio visto di lato.',
+    'Curl concentrato': 'Seduto, gomito appoggiato sulla parte interna della coscia o su un tavolo, elastico fisso sotto il piede opposto. Porta la mano verso la spalla, torna giù lentamente, poi cambia lato. Trucchi: gomito ben appoggiato e fermo; pausa 1" nella contrazione massima.',
+    'Isometria bicipiti': 'Porta i bicipiti in contrazione massima (braccia piegate a ~90° o più) tenendo l\'elastico in tensione, e mantieni 20–30 secondi respirando normalmente. Trucchi: stringi il pugno e contrai volontariamente il bicipite; perfetto come finisher.',
+    'Alzate laterali con elastico': 'Elastico sotto i piedi, braccia lungo i fianchi, palmi verso il corpo. Solleva le braccia lateralmente finché quasi parallele al suolo, gomiti leggermente flessi, poi torna giù controllato. Trucchi: non dondolare il busto; pollici leggermente in basso come per "versare acqua".',
+    'Alzate frontali con elastico': 'Come le alzate laterali ma sollevi le braccia davanti a te finché sono parallele al suolo. Trucchi: movimento lento, niente oscillazioni; non inarcare la schiena.',
+    'Lento avanti con elastico': 'Elastico sotto i piedi, mani all\'altezza delle spalle, palmi in avanti. Spingi le braccia verso l\'alto finché sono distese sopra la testa, poi torna giù controllato. Trucchi: non inarcare la schiena, core contratto; dà volume e forza alle spalle.',
+    'Pallof press con elastico': 'Elastico fisso di lato all\'altezza del petto, mani al centro del petto, fai un passo laterale per creare tensione. Spingi le braccia in avanti distendendole, resistendo alla rotazione che l\'elastico vuole imprimere al busto, torna lentamente. Tutte le ripetizioni da un lato, poi cambia. Trucchi: busto fermo, non farti ruotare; fondamentale per la stabilità nel tiro con l\'arco.',
+    'Dead bug': 'Sdraiato, braccia verso il soffitto, gambe sollevate con ginocchia a 90°. Contrai l\'addome schiacciando la zona lombare a terra, stendi lentamente un braccio indietro e la gamba opposta in avanti senza inarcare la schiena, torna e cambia lato. Trucchi: schiena incollata al tappetino; movimento lento.',
+    'Russian twist': 'Seduto sul tappetino, ginocchia piegate, piedi a terra o leggermente sollevati, mani unite davanti al petto (eventuale peso da 3 kg o elastico teso). Ruota il busto portando le mani a destra e a sinistra col core contratto. Trucchi: muovi il busto, non solo le braccia; schiena dritta.',
+    'Burpees (o mezzo burpee)': 'Completo: accosciata → mani a terra → salta i piedi indietro in plank → push-up (opzionale) → salta i piedi in avanti → salto in alto con braccia sopra la testa. Mezzo burpee: senza salto finale e/o senza push-up. Trucchi: ritmo costante; atterra morbido sui piedi.',
+    'Jumping jacks': 'In piedi, salta aprendo le gambe e portando le braccia sopra la testa, poi salta di nuovo richiudendo gambe e braccia. Trucchi: atterra morbido con ginocchia leggermente flesse; ritmo costante.',
+    'High knees': 'Corri sul posto portando le ginocchia il più in alto possibile, vicino al petto, con le braccia in coordinazione. Trucchi: ritmo veloce ma controllato; core contratto per non inarcare la schiena.',
+    'Mountain climbers': 'In posizione di plank con le mani sotto le spalle, porta alternativamente le ginocchia verso il petto come se corressi in orizzontale. Trucchi: busto fermo, non sollevare il sedere; ritmo veloce ma controllato.',
+    'Squat a corpo libero': 'Piedi poco più larghi delle spalle, punte leggermente in fuori, schiena dritta e petto alto. Scendi come per sederti fino ad avere le cosce almeno parallele al suolo, risali spingendo sui talloni. Trucchi: ginocchia in linea con le punte; non inarcare né curvare la schiena.',
+    'Affondi statici': 'Fai un passo in avanti e scendi finché entrambe le ginocchia formano circa 90° (ginocchio posteriore quasi a terra), risali e ripeti dallo stesso lato, poi cambia gamba. Trucchi: busto dritto; ginocchio anteriore non supera troppo la punta.',
+    'Stretching petto': 'Braccia dietro la schiena o allo stipite della porta, apri il torace sentendo l\'allungamento sul petto. Tieni ogni posizione 20–30" respirando con calma.',
+    'Stretching spalle': 'Circonduzioni delle spalle avanti e indietro e allungamenti lenti, senza forzare.',
+    'Stretching dorso': 'Gatto-cammello (inarca e arrotonda lentamente la schiena a quattro zampe) e torsioni dolci del busto.',
+    'Stretching anche e catena posteriore': 'Allungamenti di muscoli posteriori della coscia, glutei e anche: piegamenti in avanti con schiena dritta, affondi lenti e rotazioni del bacino.',
+    'Respirazione diaframmatica': 'Sdraiato con le ginocchia piegate, una mano sul petto e una sulla pancia. Inspira dal naso facendo gonfiare la pancia (il petto resta fermo) ed espira lentamente dalla bocca. 5 minuti lenti: aiuta concentrazione e controllo nel tiro con l\'arco.'
   };
 
-  const WEEKDAYS = [
-    { name: 'Lunedì',     main: 'A', label: 'Scheda A + Scheda M' },
-    { name: 'Martedì',    main: 'B', label: 'Scheda B + Scheda M' },
-    { name: 'Mercoledì',  main: null, label: 'Solo Scheda M' },
-    { name: 'Giovedì',    main: 'A', label: 'Scheda A + Scheda M' },
-    { name: 'Venerdì',    main: 'B', label: 'Scheda B + Scheda M' },
-    { name: 'Sabato',     main: null, label: 'Scheda M + camminata leggera' },
-    { name: 'Domenica',   main: null, label: 'Scheda M leggera o riposo completo' }
+  /* ================= PROGRAMMA SETTIMANALE ================= */
+
+  const DAYS = [
+    { id: 'd1', name: 'Lunedì', short: 'Lun', num: 'Giorno 1', title: 'Petto + Tricipiti + Addome',
+      tag: 'tag-1',
+      warmup: 'Riscaldamento 5–7 min: circonduzioni braccia, push-up leggeri, mobilità spalle.',
+      circuits: [
+        { name: 'Circuito A · Petto', rounds: 4, rest: 60, restTxt: '60–75"', items: [
+          ['Push-up classici', 'max – 1'],
+          ['Diamond push-up', 'max – 2'],
+          ['Croci con elastico', '15–25'],
+          ['Push-up su piano rialzato', '10–20']
+        ]},
+        { name: 'Circuito B · Tricipiti', rounds: 3, rest: 60, restTxt: '60"', items: [
+          ['French press con elastico', '15–25'],
+          ['Estensioni tricipiti dietro la testa', '15–25'],
+          ['Push-down con elastico', '15–25']
+        ]},
+        { name: 'Addome', rounds: 3, rest: 45, restTxt: '45–60"', items: [
+          ['Crunch', '20–30'],
+          ['Reverse crunch', '15–25'],
+          ['Plank', '45–60"']
+        ]}
+      ] },
+
+    { id: 'd2', name: 'Martedì', short: 'Mar', num: 'Giorno 2', title: 'Schiena + Bicipiti + Core funzionale',
+      tag: 'tag-2',
+      warmup: 'Riscaldamento 5–7 min: rotazioni spalle, circolazioni braccia, rematori leggeri.',
+      circuits: [
+        { name: 'Circuito A · Schiena', rounds: 4, rest: 60, restTxt: '60–75"', items: [
+          ['Rematore con elastico', '20–30'],
+          ['Trazioni simulate con elastico', '15–25'],
+          ['Face pull', '20–30'],
+          ['Pull-down con elastico sopra la testa', '15–25']
+        ]},
+        { name: 'Circuito B · Bicipiti', rounds: 3, rest: 60, restTxt: '60"', items: [
+          ['Curl bicipiti (presa larga)', '15–25'],
+          ['Curl bicipiti martello', '15–25'],
+          ['Curl concentrato', '12–20 per lato']
+        ]},
+        { name: 'Core funzionale (tiro con l\'arco)', rounds: 3, rest: 45, restTxt: '45–60"', items: [
+          ['Plank', '45–60"'],
+          ['Side plank', '30–45" per lato'],
+          ['Pallof press con elastico', '10–15 per lato'],
+          ['Dead bug', '10–15 per lato']
+        ]}
+      ] },
+
+    { id: 'd3', name: 'Mercoledì', short: 'Mer', num: 'Giorno 3', title: 'Petto + Spalle + Addome',
+      tag: 'tag-3',
+      warmup: 'Riscaldamento 5–7 min: circonduzioni braccia, push-up leggeri, mobilità spalle.',
+      circuits: [
+        { name: 'Circuito A · Petto', rounds: 4, rest: 60, restTxt: '60–75"', items: [
+          ['Push-up classici', 'max – 1'],
+          ['Diamond push-up', 'max – 2'],
+          ['Croci con elastico', '15–25'],
+          ['Push-up con pausa in basso', '8–15']
+        ]},
+        { name: 'Circuito B · Spalle', rounds: 3, rest: 60, restTxt: '60"', items: [
+          ['Alzate laterali con elastico', '20–30'],
+          ['Alzate frontali con elastico', '15–25'],
+          ['Lento avanti con elastico', '15–25'],
+          ['Face pull', '15–25']
+        ]},
+        { name: 'Addome', rounds: 3, rest: 45, restTxt: '45–60"', items: [
+          ['Crunch', '20–30'],
+          ['Russian twist', '20–30 totali'],
+          ['Plank', '45–60"']
+        ]}
+      ] },
+
+    { id: 'd4', name: 'Giovedì', short: 'Gio', num: 'Giorno 4', title: 'Braccia (ipertrofia) + Core',
+      tag: 'tag-4',
+      warmup: 'Riscaldamento 5–7 min: circolazioni braccia, elastici leggeri, mobilità gomiti e polsi.',
+      circuits: [
+        { name: 'Blocco Bicipiti', rounds: 4, rest: 60, restTxt: '60"', items: [
+          ['Curl bicipiti (presa larga)', '15–25'],
+          ['Curl bicipiti martello', '15–25'],
+          ['Curl concentrato', '12–20 per lato'],
+          ['Isometria bicipiti', '20–30"']
+        ]},
+        { name: 'Blocco Tricipiti', rounds: 4, rest: 60, restTxt: '60"', items: [
+          ['French press con elastico', '15–25'],
+          ['Estensioni tricipiti dietro la testa', '15–25'],
+          ['Push-down con elastico', '15–25'],
+          ['Diamond push-up', 'max – 2']
+        ]},
+        { name: 'Addome', rounds: 3, rest: 45, restTxt: '45–60"', items: [
+          ['Reverse crunch', '15–25'],
+          ['Side plank', '30–45" per lato'],
+          ['Dead bug', '10–15 per lato']
+        ]}
+      ] },
+
+    { id: 'd5', name: 'Venerdì', short: 'Ven', num: 'Giorno 5', title: 'Upper body funzionale + Addome',
+      tag: 'tag-5',
+      note: { cls: 'note-yellow', text: 'Questo giorno ti dà forza e stabilità nella parte alta: è il lavoro più utile per il tiro con l\'arco.' },
+      warmup: 'Riscaldamento 5–7 min: rotazioni spalle, elastici leggeri, mobilità toracica.',
+      circuits: [
+        { name: 'Circuito unico · Forza e stabilità', rounds: 4, rest: 75, restTxt: '75–90"', items: [
+          ['Push-up classici', 'max – 2'],
+          ['Rematore con elastico', '20–30'],
+          ['Trazioni simulate con elastico', '15–25'],
+          ['Face pull', '15–25'],
+          ['Alzate laterali con elastico', '15–25'],
+          ['Curl bicipiti martello', '12–20 ciascuno'],
+          ['Pallof press con elastico', '10–15 per lato'],
+          ['Plank', '45–60"']
+        ]}
+      ] },
+
+    { id: 'd6', name: 'Sabato', short: 'Sab', num: 'Giorno 6', title: 'Condizionamento + Addome',
+      tag: 'tag-6',
+      warmup: 'Riscaldamento 5–7 min: jumping jacks leggeri, rotazioni articolari, mobilità.',
+      circuits: [
+        { name: 'Condizionamento', rounds: 3, rest: 60, restTxt: '60"', items: [
+          ['Burpees (o mezzo burpee)', '8–15'],
+          ['Jumping jacks', '30–60"'],
+          ['Mountain climbers', '20–40'],
+          ['Rematore veloce (elastico)', '20–30']
+        ]},
+        { name: 'Addome "definitivo"', rounds: 4, rest: 45, restTxt: '45–60"', items: [
+          ['Crunch', '20–30'],
+          ['Reverse crunch', '15–25'],
+          ['Russian twist', '20–30'],
+          ['Plank', '45–60"'],
+          ['Side plank', '30–45" per lato']
+        ]}
+      ] },
+
+    { id: 'd7', name: 'Domenica', short: 'Dom', num: 'Giorno 7', title: 'Recupero attivo + Mobilità',
+      tag: 'tag-7',
+      recovery: true,
+      warmup: 'Recupero e mobilità: niente fatica, solo movimento fluido e respiro.',
+      circuits: [
+        { name: 'Recupero attivo', rounds: 1, rest: 0, restTxt: '—', items: [
+          ['🚶 Camminata', '30–60 min', 'Camminata a ritmo tranquillo, schiena dritta e respiro regolare.'],
+          ['Stretching petto', '10–15 min totali', 'Braccia dietro la schiena o allo stipite della porta, apri il torace sentendo l\'allungamento sul petto.'],
+          ['Stretching spalle', '10–15 min totali', 'Circonduzioni delle spalle avanti e indietro e allungamenti lenti, senza forzare.'],
+          ['Stretching dorso', '10–15 min totali', 'Gatto-cammello (inarca e arrotonda lentamente la schiena a quattro zampe) e torsioni dolci del busto.'],
+          ['Stretching anche e catena posteriore', '10–15 min totali', 'Piegamenti in avanti con schiena dritta, affondi lenti e rotazioni del bacino.'],
+          ['Respirazione diaframmatica', '5 minuti', 'Sdraiato, una mano sul petto e una sulla pancia: inspira dal naso gonfiando la pancia, espira lentamente dalla bocca. Aiuta concentrazione e controllo nel tiro con l\'arco.']
+        ]}
+      ] }
   ];
+
+  const DAY_BY_ID = {};
+  DAYS.forEach(d => DAY_BY_ID[d.id] = d);
+
+  const WEEK_ORDER = [1, 2, 3, 4, 5, 6, 0]; /* lun..dom come indici */
+  const todayDayIdx = () => new Date().getDay(); /* 0=domenica */
+  const todayDayId = () => 'd' + (WEEK_ORDER.indexOf(todayDayIdx()) + 1);
+
+  const itemsOf = d => d.circuits.flatMap(c => c.items);
 
   /* ================= UTILITÀ ================= */
 
-  const LS = { checks: 'gym_checks', checksDay: 'gym_checks_day', history: 'gym_history', theme: 'gym_theme', logs: 'gym_logs', reminder: 'gym_reminder', lastNotif: 'gym_last_notif', sets: 'gym_sets', weight: 'gym_weight', times: 'gym_times', guide: 'gym_guide', iosHint: 'gym_ios_hint' };
+  const LS = { checks: 'gym_checks', checksDay: 'gym_checks_day', history: 'gym_history', theme: 'gym_theme', guide: 'gym_guide', iosHint: 'gym_ios_hint' };
 
   const $ = id => document.getElementById(id);
 
@@ -1274,11 +1068,10 @@ footer { text-align: center; margin: 26px 0 10px; color: var(--muted); font-size
     return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
   }
 
-  function fmtDur(sec) {
-    sec = Math.max(0, Math.floor(sec));
-    const h = Math.floor(sec / 3600), m = Math.floor(sec % 3600 / 60), s = sec % 60;
-    const mm = String(m).padStart(2, '0'), ss = String(s).padStart(2, '0');
-    return h > 0 ? `${h}:${mm}:${ss}` : `${mm}:${ss}`;
+  function parseReps(reps) {
+    const m = reps.match(/(\d+)\s*–\s*(\d+)/);
+    if (m) return m[1] + '–' + m[2];
+    return reps;
   }
 
   function weekBounds() {
@@ -1294,26 +1087,10 @@ footer { text-align: center; margin: 26px 0 10px; color: var(--muted); font-size
     return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
   }
 
-  function typeLabel(t) {
-    switch (t) {
-      case 'M': return 'Scheda M · Mattina';
-      case 'A': return 'Scheda A · Petto, bicipiti e spalle';
-      case 'B': return 'Scheda B · Addominali, schiena e tricipiti';
-      case 'morning': return '🌅 Scheda M (vecchia)';
-      case 'C': return '🦵 Scheda C (vecchia)';
-      case 'recover': return '🌿 Recupero attivo';
-      default: return t;
-    }
-  }
-
   /* ================= STATO ================= */
 
   let checks = load(LS.checks, {});
   let history = load(LS.history, []);
-  let logs = load(LS.logs, {});
-  let setsOver = load(LS.sets, {});
-  let weights = load(LS.weight, []);
-  let times = load(LS.times, []);
 
   if (load(LS.checksDay, '') !== todayISO()) {
     checks = {};
@@ -1321,19 +1098,17 @@ footer { text-align: center; margin: 26px 0 10px; color: var(--muted); font-size
     save(LS.checksDay, todayISO());
   }
 
-  const itemsOf = key => SCHEMES[key].groups.flatMap(g => g.items);
-
-  function ensureChecks(key) {
-    const n = itemsOf(key).length;
-    if (!Array.isArray(checks[key])) checks[key] = [];
-    while (checks[key].length < n) checks[key].push(false);
-    if (checks[key].length > n) checks[key].length = n;
+  function ensureChecks(id) {
+    const n = itemsOf(DAY_BY_ID[id]).length;
+    if (!Array.isArray(checks[id])) checks[id] = [];
+    while (checks[id].length < n) checks[id].push(false);
+    if (checks[id].length > n) checks[id].length = n;
   }
 
   /* ================= ROUTER ================= */
 
-  const PAGES = ['oggi', 'schede', 'piano', 'timer', 'progressi', 'consigli'];
-  const TITLES = { oggi: '🏋️ Scheda GYM', schede: '📋 Schede', piano: '📅 Piano', timer: '⏱️ Timer', progressi: '📊 Progressi', consigli: '💡 Consigli' };
+  const PAGES = ['oggi', 'schede', 'piano', 'timer', 'consigli'];
+  const TITLES = { oggi: '🏋️ Scheda GYM', schede: '📋 Schede', piano: '📅 Piano', timer: '⏱️ Timer', consigli: '💡 Consigli' };
 
   function currentPage() {
     const h = location.hash.replace(/^#\/?/, '');
@@ -1341,9 +1116,7 @@ footer { text-align: center; margin: 26px 0 10px; color: var(--muted); font-size
   }
 
   function showPage(p) {
-    PAGES.forEach(x => {
-      $('page-' + x).classList.toggle('active', x === p);
-    });
+    PAGES.forEach(x => $('page-' + x).classList.toggle('active', x === p));
     document.querySelectorAll('.tabbar button').forEach(b => b.classList.toggle('active', b.dataset.page === p));
     $('pageTitle').textContent = TITLES[p];
     document.title = TITLES[p];
@@ -1363,248 +1136,205 @@ footer { text-align: center; margin: 26px 0 10px; color: var(--muted); font-size
   /* ================= PAGINA OGGI ================= */
 
   function renderOggi() {
-    const { now, mon, off } = weekBounds();
-    const info = WEEKDAYS[now.getDay()];
+    const idx = todayDayIdx();
+    const day = DAYS[WEEK_ORDER.indexOf(idx)];
     const today = todayISO();
+    const doneToday = history.some(h => h.date === today && h.id === day.id);
 
-    const isSun = now.getDay() === 0;
     const hero = $('oggiHero');
     hero.innerHTML = `
-      <div class="day">${info.name} · ${now.toLocaleDateString('it-IT', { day: 'numeric', month: 'long' })}</div>
-      <h2>${isSun ? 'Riposo 🧘' : 'Allenamento!'}</h2>
-      <p class="plan">${info.label}</p>
-      <div class="chips" style="margin-bottom:12px;">
-        ${info.main ? `<span class="chip" style="color:var(--${info.main.toLowerCase()}); border-color:var(--${info.main.toLowerCase()});">Scheda ${info.main}</span>` : ''}
-        <span class="chip" style="color:var(--m); border-color:var(--m);">Scheda M${isSun ? ' · opzionale' : ''}</span>
-      </div>
+      <div class="day">${day.name} · ${new Date().toLocaleDateString('it-IT', { day: 'numeric', month: 'long' })}</div>
+      <h2>${day.title}</h2>
+      <p class="plan">${day.recovery ? 'Recupero attivo: camminata, stretching e respirazione.' : day.circuits.map(c => `${c.name} · ${c.rounds} giri · rec. ${c.restTxt}`).join('<br>')}</p>
       <div class="action-row">
-        ${info.main ? `<button class="btn primary" id="oggiGuideMain">▶ Guida Scheda ${info.main}</button>` : ''}
-        <button class="btn" id="oggiGuideM">🌅 Guida Scheda M</button>
-        <button class="btn ghost" id="oggiGoSchede">📋 Apri le schede</button>
+        ${day.recovery ? '' : `<button class="btn primary" id="oggiGuide">▶ Sessione guidata</button>`}
+        <button class="btn" id="oggiOpen">📋 Apri la scheda</button>
       </div>
     `;
 
-    if (info.main) $('oggiGuideMain').addEventListener('click', () => { go('schede'); openGuide(info.main); });
-    $('oggiGuideM').addEventListener('click', () => { go('schede'); openGuide('M'); });
-    $('oggiGoSchede').addEventListener('click', () => go('schede'));
+    const g = $('oggiGuide');
+    if (g) g.addEventListener('click', () => { go('schede'); selectDay(day.id, true); openGuide(day.id); });
+    $('oggiOpen').addEventListener('click', () => { go('schede'); selectDay(day.id); });
 
-    $('oggiToday').innerHTML = `
-      <div class="card-head">
-        <h2>Oggi ${isSun ? '(opzionale)' : ''}</h2>
+    const todayCard = $('oggiToday');
+    todayCard.innerHTML = `
+      <div class="card-head"><h2>${day.recovery ? '🌿 Recupero attivo' : '🏋️ Allenamento di oggi'}</h2>
+        <span class="tag ${day.tag}">${day.num}</span></div>
+      ${day.warmup ? `<p class="muted small" style="margin-bottom:10px;">${day.warmup}</p>` : ''}
+      <div class="chips">
+        ${day.circuits.map(c => `<span class="chip">${c.name}</span>`).join('')}
       </div>
-      <p class="muted small" style="margin-bottom:12px;">${isSun ? 'Se vuoi, fai la Scheda M molto leggera oppure riposa completamente.' : 'Ecco il programma di oggi:'}</p>
-      <div class="chips" id="oggiTodayChips"></div>
-      <p class="muted small" style="margin-top:12px;">Apri <strong>Schede</strong> per spuntare gli esercizi e completare la sessione.</p>
+      <p class="muted small" style="margin-top:12px;">${doneToday
+        ? '✅ Giornata completata. Ottimo lavoro!'
+        : 'Apri <strong>Schede</strong> per spuntare gli esercizi e completare la giornata.'}</p>
     `;
 
-    const chips = $('oggiTodayChips');
-    const addChip = (text, cls) => {
-      const c = document.createElement('button');
-      c.className = 'chip';
-      c.textContent = text;
-      c.style.cssText = `color:var(--${cls}); border-color:var(--${cls}); cursor:pointer;`;
-      c.addEventListener('click', () => { go('schede'); selectScheme(cls === 'm' ? 'M' : cls.toUpperCase()); });
-      chips.appendChild(c);
-    };
-    if (info.main) addChip('Scheda ' + info.main, info.main.toLowerCase());
-    addChip('Scheda M', 'm');
-    if (!isSun && !info.main) addChip('🚶 Camminata leggera', 'purple');
-
-    /* statistiche */
     $('statTotal').textContent = history.length;
 
-    let planned = 0, done = 0;
-    for (let i = 0; i <= off; i++) {
+    const { mon, off } = weekBounds();
+    let planned = 0, doneCount = 0;
+    for (let i = 0; i <= 6; i++) {
       const d = new Date(mon);
       d.setDate(mon.getDate() + i);
-      const wd = WEEKDAYS[d.getDay()];
-      if (!wd.main) continue;
-      planned++;
+      const dayOfWeek = d.getDay();
+      const did = 'd' + (WEEK_ORDER.indexOf(dayOfWeek) + 1);
       const iso = isoOf(d);
-      if (history.some(h => (h.type === 'A' || h.type === 'B') && h.date === iso)) done++;
+      const isPast = iso <= today;
+      const isDone = history.some(h => h.date === iso && h.id === did);
+      if (i <= off && isPast) { planned++; if (isDone) doneCount++; }
+      if (i > off && isDone) doneCount++;
     }
-    $('statWeek').textContent = `${done}/${planned}`;
-    const pct = planned > 0 ? Math.round(done / planned * 100) : 0;
-    $('statPct').textContent = planned > 0 ? pct + '%' : '—';
-    $('statBar').style.width = pct + '%';
+    /* giorni di allenamento previsti: 6 (esclusa domenica) */
+    const totalPlanned = Math.min(6, planned + (off >= 6 ? 0 : 0));
+    const plannedLabel = Math.min(6, planned || 1);
+    $('statWeek').textContent = `${doneCount}/${plannedLabel}`;
+    $('statToday').textContent = doneToday ? '✅ Fatto' : day.recovery ? '🌿 Recupero' : '⬜ Da fare';
   }
 
   /* ================= PAGINA SCHEDE ================= */
 
-  let currentScheme = 'M';
+  let currentDayId = todayDayId();
 
-  function selectScheme(key, silent) {
-    currentScheme = key;
-    document.querySelectorAll('#schemeTabs button').forEach(b => b.classList.toggle('active', b.dataset.scheme === key));
-    renderScheme(key);
+  function renderDayTabs() {
+    const tabs = $('dayTabs');
+    tabs.innerHTML = '';
+    DAYS.forEach(d => {
+      const b = document.createElement('button');
+      b.dataset.id = d.id;
+      b.className = d.id === currentDayId ? 'active' : '';
+      if (d.id === todayDayId()) b.classList.add('today-marked');
+      b.innerHTML = `<span class="sub">${d.short} · ${d.num.replace('Giorno ', 'G')}</span>${d.name}`;
+      b.addEventListener('click', () => selectDay(d.id));
+      tabs.appendChild(b);
+    });
   }
 
-  document.querySelectorAll('#schemeTabs button').forEach(b => {
-    b.addEventListener('click', () => selectScheme(b.dataset.scheme));
-  });
+  function selectDay(id, silent) {
+    currentDayId = id;
+    renderDayTabs();
+    renderDay(id);
+  }
 
-  function renderScheme(key) {
-    const p = SCHEMES[key];
+  function renderDay(id) {
+    const d = DAY_BY_ID[id];
+    const done = history.some(h => h.type === id && h.date === todayISO()) || history.some(h => h.id === id && h.date === todayISO());
     const card = $('schedeCard');
-    const done = history.some(h => h.type === key && h.date === todayISO());
 
     card.innerHTML = `
       <div class="card">
         <div class="card-head">
-          <span class="tag ${p.tagClass}">${p.tag}</span>
-          <h2>${p.title}</h2>
-          <button class="btn ghost small" id="resetSetsBtn" title="Ripristina serie e ripetizioni originali" style="display:none;">↺</button>
+          <span class="tag ${d.tag}">${d.num}</span>
+          <h2>${d.title}</h2>
         </div>
         <div class="chips scheme-meta">
-          ${p.meta.map(m => `<span class="chip">${m}</span>`).join('')}
+          <span class="chip">${d.recovery ? '♻️ Recupero attivo' : d.circuits.length + ' circuiti'}</span>
+          ${d.recovery ? '<span class="chip">Niente fatica</span>' : d.circuits.slice(0, 2).map(c => `<span class="chip">${c.restTxt} recupero</span>`).join('')}
         </div>
-        <button class="complete-btn guide" id="guideBtn">▶ Inizia sessione guidata</button>
-        <div id="schemeBody"></div>
+        ${d.warmup ? `<div class="note note-blue">${d.warmup}</div>` : ''}
+        ${d.note ? `<div class="note ${d.note.cls}">${d.note.text}</div>` : ''}
+        ${d.recovery ? '' : `<button class="complete-btn guide" id="guideBtn">▶ Inizia sessione guidata</button>`}
+        <div id="dayBody"></div>
         <div class="progress-row">
-          <div class="progress-track"><div class="progress-fill ${p.fill}" id="schemeBar" style="width:0%"></div></div>
-          <div class="progress-pct" id="schemePct">0%</div>
+          <div class="progress-track"><div class="progress-fill" id="dayBar" style="width:0%"></div></div>
+          <div class="progress-pct" id="dayPct">0%</div>
         </div>
-        <button class="complete-btn" id="doneBtn" data-type="${key}">${done ? '✓ Completata — clicca per annullare' : '✓ Completa sessione'}</button>
-        ${p.note ? `<div class="note ${p.note.cls}">${p.note.text}</div>` : ''}
+        <button class="complete-btn" id="doneBtn">${done ? '✓ Completata — clicca per annullare' : '✓ Completa giornata'}</button>
       </div>
     `;
 
-    $('guideBtn').addEventListener('click', () => openGuide(key));
-    $('guideBtn').style.display = done ? 'none' : '';
-    $('doneBtn').addEventListener('click', e => toggleComplete(key, e.target));
-    $('resetSetsBtn').addEventListener('click', () => {
-      delete setsOver[key];
-      save(LS.sets, setsOver);
-      renderSchemeBody(key);
-    });
+    if (!d.recovery) {
+      const g = $('guideBtn');
+      g.style.display = done ? 'none' : '';
+      g.addEventListener('click', () => openGuide(id));
+    }
+    $('doneBtn').addEventListener('click', e => toggleComplete(id, e.target));
 
-    renderSchemeBody(key);
-    updateSchemeProgress(key);
-    $('resetSetsBtn').style.display = setsOver[key] && Object.keys(setsOver[key]).length ? '' : 'none';
+    renderDayBody(id);
+    updateDayProgress(id);
   }
 
-  function renderSchemeBody(key) {
-    const p = SCHEMES[key];
-    const body = $('schemeBody');
-    ensureChecks(key);
+  function renderDayBody(id) {
+    const d = DAY_BY_ID[id];
+    const body = $('dayBody');
+    ensureChecks(id);
     body.innerHTML = '';
 
     let idx = 0;
-    p.groups.forEach(g => {
+    d.circuits.forEach(c => {
       const gt = document.createElement('div');
       gt.className = 'group-title';
-      gt.textContent = g.name;
+      gt.textContent = `${c.name} · ${c.rounds} ${c.rounds === 1 ? 'giro' : 'giri'} · recupero ${c.restTxt}`;
       body.appendChild(gt);
 
-      g.items.forEach(([name, sets, descText]) => {
+      c.items.forEach(item => {
         const i = idx++;
-        const log = (logs[key] && logs[key][i]) || {};
-        const setsVal = (setsOver[key] && setsOver[key][i]) || sets;
+        const name = item[0], reps = item[1], desc = item[2] || EX[item[0]] || '';
 
-        const item = document.createElement('div');
-        item.className = 'ex-item' + (checks[key][i] ? ' done' : '');
-        item.innerHTML = `
-          <span class="check ${checks[key][i] ? 'on' : ''}" role="checkbox" aria-checked="${!!checks[key][i]}" tabindex="0">✓</span>
+        const el = document.createElement('div');
+        el.className = 'ex-item' + (checks[id][i] ? ' done' : '');
+        el.innerHTML = `
+          <span class="check ${checks[id][i] ? 'on' : ''}" role="checkbox" aria-checked="${!!checks[id][i]}" tabindex="0">✓</span>
           <div class="ex-main">
             <span class="ex-name">${name}</span>
-            <span class="ex-sets">${setsVal}</span>
-            <span class="meta-inputs">
-              <label>kg <input class="mini-input" value="${log.weight ?? ''}" placeholder="0" inputmode="decimal"></label>
-              <label>RPE <input class="mini-input" value="${log.rpe ?? ''}" placeholder="0" inputmode="numeric"></label>
-            </span>
+            <span class="ex-reps">${reps}</span>
           </div>
-          <button class="info-btn" title="Come si esegue" aria-expanded="false">+</button>
+          ${desc ? `<button class="info-btn" title="Come si esegue" aria-expanded="false">+</button>` : ''}
         `;
-        body.appendChild(item);
+        body.appendChild(el);
 
-        const desc = document.createElement('div');
-        desc.className = 'ex-desc';
-        desc.textContent = descText || '';
-        body.appendChild(desc);
+        if (desc) {
+          const descEl = document.createElement('div');
+          descEl.className = 'ex-desc';
+          descEl.textContent = desc;
+          body.appendChild(descEl);
 
-        const chk = item.querySelector('.check');
+          const infoBtn = el.querySelector('.info-btn');
+          infoBtn.addEventListener('click', () => {
+            const open = descEl.classList.toggle('open');
+            infoBtn.classList.toggle('open', open);
+            infoBtn.textContent = open ? '−' : '+';
+            infoBtn.setAttribute('aria-expanded', open);
+          });
+        }
+
+        const chk = el.querySelector('.check');
         const toggle = () => {
-          checks[key][i] = !checks[key][i];
+          checks[id][i] = !checks[id][i];
           save(LS.checks, checks);
-          chk.classList.toggle('on', checks[key][i]);
-          chk.setAttribute('aria-checked', checks[key][i]);
-          item.classList.toggle('done', checks[key][i]);
-          updateSchemeProgress(key);
+          chk.classList.toggle('on', checks[id][i]);
+          chk.setAttribute('aria-checked', checks[id][i]);
+          el.classList.toggle('done', checks[id][i]);
+          updateDayProgress(id);
         };
         chk.addEventListener('click', toggle);
         chk.addEventListener('keydown', e => { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); toggle(); } });
-
-        const infoBtn = item.querySelector('.info-btn');
-        const descEl = desc;
-        infoBtn.addEventListener('click', () => {
-          const open = descEl.classList.toggle('open');
-          infoBtn.classList.toggle('open', open);
-          infoBtn.textContent = open ? '−' : '+';
-          infoBtn.setAttribute('aria-expanded', open);
-        });
-
-        item.querySelectorAll('.mini-input').forEach((input, k) => {
-          const which = k === 0 ? 'weight' : 'rpe';
-          input.addEventListener('input', () => {
-            if (!logs[key]) logs[key] = {};
-            if (!logs[key][i]) logs[key][i] = {};
-            logs[key][i][which] = input.value;
-            save(LS.logs, logs);
-          });
-        });
       });
     });
   }
 
-  function updateSchemeProgress(key) {
-    const n = itemsOf(key).length;
-    const done = n > 0 ? checks[key].filter(Boolean).length : 0;
+  function updateDayProgress(id) {
+    const n = itemsOf(DAY_BY_ID[id]).length;
+    const done = n > 0 ? checks[id].filter(Boolean).length : 0;
     const pct = n > 0 ? Math.round(done / n * 100) : 0;
-    const bar = $('schemeBar'), pctEl = $('schemePct');
+    const bar = $('dayBar'), pctEl = $('dayPct');
     if (bar) bar.style.width = pct + '%';
     if (pctEl) pctEl.textContent = pct + '%';
   }
 
-  function toggleComplete(key, btn) {
+  function toggleComplete(id, btn) {
     const t = todayISO();
-    const idx = history.findIndex(h => h.type === key && h.date === t);
+    const idx = history.findIndex(h => h.id === id && h.date === t);
     if (idx >= 0) {
       history.splice(idx, 1);
-      btn.classList.remove('on');
-      btn.textContent = '✓ Completa sessione';
     } else {
-      history.push({ type: key, date: t });
-      btn.classList.add('on');
-      btn.textContent = '✓ Completata — clicca per annullare';
-      const secs = Math.round(sessCurrent());
-      if (secs >= 5) saveSessionTime(key, secs, true);
+      history.push({ id, date: t });
       confetti();
       beep(2);
     }
     save(LS.history, history);
-    renderCalendar();
-    renderHeatmap();
-    renderHistory();
-    renderSessionTimes();
     renderOggi();
     renderWeekTable();
-    syncSchemeButtons();
-  }
-
-  function syncSchemeButtons() {
-    const t = todayISO();
-    Object.keys(SCHEMES).forEach(key => {
-      if (key === currentScheme) {
-        const btn = $('doneBtn');
-        const done = history.some(h => h.type === key && h.date === t);
-        if (btn) {
-          btn.classList.toggle('on', done);
-          btn.textContent = done ? '✓ Completata — clicca per annullare' : '✓ Completa sessione';
-        }
-        const g = $('guideBtn');
-        if (g) g.style.display = done ? 'none' : '';
-      }
-    });
+    renderDay(id);
   }
 
   /* ================= MODALITÀ GUIDA ================= */
@@ -1616,81 +1346,84 @@ footer { text-align: center; margin: 26px 0 10px; color: var(--muted); font-size
   let guide = null;
   let guideRestInterval = null;
 
-  const setsOf = sets => (sets.match(/^(\d+)\s*[×x]/) ? parseInt(sets.match(/^(\d+)\s*[×x]/)[1], 10) : 1);
-  const fmt2 = s => String(Math.max(0, Math.round(s))).padStart(2, '0');
-  const fmtG = s => { s = Math.max(0, Math.floor(s)); return Math.floor(s / 60) + ':' + fmt2(s % 60); };
+  function buildSteps(id) {
+    const d = DAY_BY_ID[id];
+    const steps = [];
+    let stepIdx = 0;
+    d.circuits.forEach(c => {
+      for (let r = 1; r <= c.rounds; r++) {
+        c.items.forEach((item, k) => {
+          steps.push({
+            circuit: c.name, round: r, rounds: c.rounds, rest: c.rest,
+            name: item[0], reps: item[1],
+            desc: item[2] || EX[item[0]] || '',
+            itemIdx: stepIdx++
+          });
+        });
+      }
+    });
+    return steps;
+  }
 
   function saveGuide() {
     if (guide) save(LS.guide, guide);
     else localStorage.removeItem(LS.guide);
   }
 
-  function guideExList() {
-    return itemsOf(guide.key).filter((_, i) => !checks[guide.key][i]);
-  }
-
-  function openGuide(key) {
-    guide = { key, day: todayISO(), exIdx: 0, setIdx: 0, phase: 'set', startTs: Date.now() };
+  function openGuide(id) {
+    guide = { key: id, day: todayISO(), step: 0, phase: 'set', startTs: Date.now() };
     saveGuide();
     renderGuide();
   }
 
   function renderGuide() {
-    const p = SCHEMES[guide.key];
-    $('guideTag').textContent = p.tag;
-    $('guideTag').className = 'guide-tag ' + p.tagClass;
-    $('guideTitle').textContent = p.title;
+    const d = DAY_BY_ID[guide.key];
+    $('guideTag').textContent = d.num.replace('Giorno ', 'G');
+    $('guideTag').className = 'guide-tag ' + d.tag;
+    $('guideTitle').textContent = d.title;
 
     if (guide.phase === 'rest') { renderGuideRest(); return; }
     if (guide.phase === 'summary') { renderGuideSummary(); return; }
 
-    const list = guideExList();
-    const ex = list[guide.exIdx];
-    if (!ex) { guide.phase = 'summary'; saveGuide(); renderGuideSummary(); return; }
+    const steps = buildSteps(guide.key);
+    const st = steps[guide.step];
+    if (!st) { guide.phase = 'summary'; saveGuide(); renderGuideSummary(); return; }
 
-    const total = list.length;
-    const pct = Math.round(guide.exIdx / total * 100);
+    const total = steps.length;
+    const pct = Math.round(guide.step / total * 100);
     guideFill.style.width = pct + '%';
     guidePct.textContent = pct + '%';
-    const nSets = setsOf(ex[1]);
-    const nIdx = guide.setIdx + 1;
 
     guideBody.innerHTML = `
-      <div class="guide-info">Esercizio ${guide.exIdx + 1} di ${total}${guide.exIdx + 1 < total ? ` · Prossimo: ${list[guide.exIdx + 1][0]}` : ' · Ultimo!'}</div>
-      <div class="guide-ex">${ex[0]}</div>
-      <div class="guide-sets">${nSets > 1 ? `Serie ${nIdx} di ${nSets}` : ex[1]}</div>
-      <div class="guide-desc" id="guideDesc">${ex[2] || ''}</div>
+      <div class="guide-circuit">${st.circuit} · Giro ${st.round} di ${st.rounds}</div>
+      <div class="guide-ex">${st.name}</div>
+      <div class="guide-reps">${st.reps} ripetizioni</div>
+      <div class="guide-info">Esercizio ${guide.step + 1} di ${total}${guide.step + 1 < total ? ` · Prossimo: ${steps[guide.step + 1].name}` : ' · Ultimo!'}</div>
+      <div class="guide-desc" id="guideDesc">${st.desc || ''}</div>
       <button class="guide-desc-toggle" id="guideDescToggle">💡 Come si esegue</button>
-      <button class="guide-big" id="guideSetDone">${nSets > 1 ? '✓ Serie completata' : '✓ Esercizio fatto'}</button>
-      <button class="guide-ghost" id="guideSkip">⏭ Salta esercizio</button>
+      <button class="guide-big" id="guideStepDone">✓ Fatto</button>
+      <button class="guide-ghost" id="guideSkip">⏭ Salta</button>
     `;
 
     $('guideDescToggle').addEventListener('click', () => $('guideDesc').classList.toggle('open'));
 
-    $('guideSetDone').addEventListener('click', () => {
-      if (nSets > 1 && nIdx < nSets) {
-        guide.setIdx++;
+    $('guideStepDone').addEventListener('click', () => {
+      guide.step++;
+      const next = steps[guide.step];
+      if (next) {
         guide.phase = 'rest';
-        guide.restEndTs = Date.now() + SCHEMES[guide.key].rest * 1000;
+        guide.restEndTs = Date.now() + Math.max(10, next.rest) * 1000;
         saveGuide();
         renderGuide();
       } else {
-        guide.exIdx++;
-        guide.setIdx = 0;
-        if (guide.exIdx < list.length) {
-          guide.phase = 'rest';
-          guide.restEndTs = Date.now() + (guide.key === 'M' ? SCHEMES[guide.key].rest : SCHEMES[guide.key].rest * 2) * 1000;
-        } else {
-          guide.phase = 'set';
-        }
+        guide.phase = 'set';
         saveGuide();
         renderGuide();
       }
     });
 
     $('guideSkip').addEventListener('click', () => {
-      guide.exIdx++;
-      guide.setIdx = 0;
+      guide.step++;
       guide.phase = 'set';
       saveGuide();
       renderGuide();
@@ -1701,13 +1434,15 @@ footer { text-align: center; margin: 26px 0 10px; color: var(--muted); font-size
   }
 
   function renderGuideRest() {
-    const list = guideExList();
-    guideFill.style.width = Math.round(guide.exIdx / list.length * 100) + '%';
-    guidePct.textContent = Math.round(guide.exIdx / list.length * 100) + '%';
+    const steps = buildSteps(guide.key);
+    const st = steps[guide.step];
+    const total = steps.length;
+    guideFill.style.width = Math.round(guide.step / total * 100) + '%';
+    guidePct.textContent = Math.round(guide.step / total * 100) + '%';
 
     guideBody.innerHTML = `
       <div class="guide-rest-view">
-        <div class="guide-rest-label">Riposo — prossimo: ${list[guide.exIdx] ? list[guide.exIdx][0] : ''}</div>
+        <div class="guide-rest-label">Riposo — prossimo: ${st ? st.name : ''}</div>
         <div class="guide-rest-time" id="guideRestTime">--:--</div>
         <button class="guide-big" id="guideRestSkip">⏭ Prosegui subito</button>
         <button class="guide-ghost" id="guideRestPause">⏸ Pausa</button>
@@ -1777,22 +1512,19 @@ footer { text-align: center; margin: 26px 0 10px; color: var(--muted); font-size
         <div class="big">🎉</div>
         <h3>Sessione completata!</h3>
         <p>${dur > 0 ? `Durata: ${dur} minuti` : 'Grande lavoro!'}</p>
-        <button class="guide-big" id="guideFinish">✓ Segna la sessione come completata</button>
+        <button class="guide-big" id="guideFinish">✓ Segna la giornata come completata</button>
         <button class="guide-ghost" id="guideCloseDone">Chiudi senza segnare</button>
       </div>
     `;
 
     $('guideFinish').addEventListener('click', () => {
-      const key = guide.key;
-      const dur2 = dur;
+      const id = guide.key;
       guide = null;
       saveGuide();
-      checks[key] = itemsOf(key).map(() => true);
+      checks[id] = itemsOf(DAY_BY_ID[id]).map(() => true);
       save(LS.checks, checks);
-      selectScheme(key, true);
       const btn = $('doneBtn');
-      if (!btn.classList.contains('on')) toggleComplete(key, btn);
-      if (dur2 > 0) saveSessionTime(key, dur2 * 60, true);
+      if (!btn.classList.contains('on')) toggleComplete(id, btn);
       closeGuideOverlay();
     });
 
@@ -1818,7 +1550,7 @@ footer { text-align: center; margin: 26px 0 10px; color: var(--muted); font-size
   });
 
   const savedGuide = load(LS.guide, null);
-  if (savedGuide && savedGuide.day === todayISO() && SCHEMES[savedGuide.key] && savedGuide.phase !== 'summary') {
+  if (savedGuide && savedGuide.day === todayISO() && DAY_BY_ID[savedGuide.key] && savedGuide.phase !== 'summary') {
     guide = savedGuide;
     renderGuide();
   }
@@ -1826,7 +1558,7 @@ footer { text-align: center; margin: 26px 0 10px; color: var(--muted); font-size
   /* ================= PAGINA PIANO ================= */
 
   function renderWeekTable() {
-    const { now, mon, off } = weekBounds();
+    const { now, mon } = weekBounds();
     const today = todayISO();
     const tbody = $('weekTable');
     tbody.innerHTML = '';
@@ -1835,24 +1567,21 @@ footer { text-align: center; margin: 26px 0 10px; color: var(--muted); font-size
       const d = new Date(mon);
       d.setDate(mon.getDate() + i);
       const iso = isoOf(d);
-      const info = WEEKDAYS[d.getDay()];
+      const idx = d.getDay();
+      const day = DAYS[WEEK_ORDER.indexOf(idx)];
       const isToday = iso === today;
-      const done = history.some(h => h.date === iso && (h.type === 'A' || h.type === 'B' || h.type === 'M'));
+      const done = history.some(h => h.date === iso && h.id === day.id);
 
       const tr = document.createElement('tr');
       tr.className = isToday ? 'is-today' : '';
-      const pills = [];
-      if (info.main) pills.push(`<span class="pill pill-${info.main.toLowerCase()}">Scheda ${info.main}</span>`);
-      pills.push(`<span class="pill pill-m">Scheda M${info.main ? '' : ' · opz.'}</span>`);
-
       tr.innerHTML = `
-        <td class="day-name">${info.name}</td>
-        <td>${pills.join(' ')}</td>
+        <td class="day-name">${day.name}</td>
+        <td><strong>${day.num} · </strong>${day.title}</td>
         <td class="day-mark">${done ? '✅' : (isToday ? '⭐' : '')}</td>
       `;
       tr.addEventListener('click', () => {
         go('schede');
-        if (info.main) selectScheme(info.main);
+        selectDay(day.id);
       });
       tbody.appendChild(tr);
     }
@@ -1929,6 +1658,11 @@ footer { text-align: center; margin: 26px 0 10px; color: var(--muted); font-size
     buzz(times >= 3 ? 300 : 100);
   }
 
+  function fmtG(s) {
+    s = Math.max(0, Math.floor(s));
+    return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0');
+  }
+
   function createTimer(displayEl, startBtn, resetBtn, initial, getDuration) {
     let remaining = initial;
     let endTs = null;
@@ -1981,11 +1715,9 @@ footer { text-align: center; margin: 26px 0 10px; color: var(--muted); font-size
     return { setDuration: v => { stop(true); remaining = v; render(); } };
   }
 
-  const morningTimer = createTimer($('morningDisplay'), $('morningStart'), $('morningReset'), 600, () => 600);
-
   const restPresets = document.querySelectorAll('#restPresets .preset-btn');
-  let restSeconds = 90;
-  const restTimer = createTimer($('restDisplay'), $('restStart'), $('restReset'), 90, () => restSeconds);
+  let restSeconds = 75;
+  const restTimer = createTimer($('restDisplay'), $('restStart'), $('restReset'), 75, () => restSeconds);
 
   restPresets.forEach(b => {
     b.addEventListener('click', () => {
@@ -1996,26 +1728,23 @@ footer { text-align: center; margin: 26px 0 10px; color: var(--muted); font-size
     });
   });
 
-  /* ---------- Cronometro sessione ---------- */
   const sessDisp = $('sessDisplay');
-  const sessTypeSel = $('sessType');
   const sessStartBtn = $('sessStart');
   const sessResetBtn = $('sessReset');
-  const sessSaveBtn = $('sessSave');
 
   let sessStartTs = null;
   let sessElapsed = 0;
   let sessTick = null;
-
-  const todayInfo = WEEKDAYS[new Date().getDay()];
-  if (todayInfo.main) sessTypeSel.value = todayInfo.main;
 
   function sessCurrent() {
     return sessElapsed + (sessStartTs ? (Date.now() - sessStartTs) / 1000 : 0);
   }
 
   function sessRender() {
-    sessDisp.textContent = fmtDur(sessCurrent());
+    const sec = Math.max(0, Math.floor(sessCurrent()));
+    const h = Math.floor(sec / 3600), m = Math.floor(sec % 3600 / 60), s = sec % 60;
+    const mm = String(m).padStart(2, '0'), ss = String(s).padStart(2, '0');
+    sessDisp.textContent = h > 0 ? `${h}:${mm}:${ss}` : `${mm}:${ss}`;
   }
 
   function sessStop() {
@@ -2047,315 +1776,6 @@ footer { text-align: center; margin: 26px 0 10px; color: var(--muted); font-size
     sessRender();
   });
 
-  function saveSessionTime(type, secs, silent) {
-    const t = todayISO();
-    times = times.filter(x => !(x.date === t && x.type === type));
-    times.push({ date: t, type, seconds: secs });
-    save(LS.times, times);
-    renderSessionTimes();
-    if (!silent) {
-      sessSaveBtn.textContent = '✓ Salvato';
-      setTimeout(() => { sessSaveBtn.textContent = '💾 Salva tempo'; }, 1500);
-    }
-  }
-
-  sessSaveBtn.addEventListener('click', () => {
-    const secs = Math.round(sessCurrent());
-    if (secs < 5) {
-      sessSaveBtn.textContent = '⏳ Avvia prima il cronometro';
-      setTimeout(() => { sessSaveBtn.textContent = '💾 Salva tempo'; }, 1500);
-      return;
-    }
-    saveSessionTime(sessTypeSel.value, secs);
-    sessStop();
-    sessElapsed = 0;
-    sessRender();
-  });
-
-  function renderSessionTimes() {
-    const stats = $('sessStats');
-    const list = $('sessList');
-    const empty = $('sessEmpty');
-
-    if (times.length === 0) {
-      stats.innerHTML = '';
-      list.innerHTML = '';
-      empty.style.display = 'block';
-      return;
-    }
-    empty.style.display = 'none';
-
-    const total = times.reduce((s, x) => s + x.seconds, 0);
-    const avg = total / times.length;
-    stats.innerHTML = `
-      <div class="stat"><div class="num">${fmtDur(total)}</div><div class="lbl">Tempo totale</div></div>
-      <div class="stat"><div class="num">${fmtDur(avg)}</div><div class="lbl">Media a sessione</div></div>
-      <div class="stat"><div class="num">${times.length}</div><div class="lbl">Cronometrate</div></div>
-    `;
-
-    list.innerHTML = '';
-    const sorted = [...times].sort((a, b) => b.date.localeCompare(a.date));
-    sorted.forEach(x => {
-      const [, m, d] = x.date.split('-');
-      const el = document.createElement('div');
-      el.className = 'history-item';
-      el.innerHTML = `
-        <div><div class="date">${d}/${m}</div><div class="type">${typeLabel(x.type)}</div></div>
-        <div style="display:flex; align-items:center; gap:10px;"><strong>${fmtDur(x.seconds)}</strong><button class="del-btn" title="Elimina">✕</button></div>
-      `;
-      el.querySelector('.del-btn').addEventListener('click', () => {
-        times = times.filter(t => !(t.date === x.date && t.type === x.type));
-        save(LS.times, times);
-        renderSessionTimes();
-      });
-      list.appendChild(el);
-    });
-  }
-
-  $('sessResetAll').addEventListener('click', () => {
-    if (confirm('Vuoi davvero azzerare tutti i tempi registrati?')) {
-      times = [];
-      save(LS.times, times);
-      renderSessionTimes();
-    }
-  });
-
-  /* ---------- Promemoria ---------- */
-  const remEnable = $('remEnable');
-  const remTime = $('remTime');
-  const remStatus = $('remStatus');
-  let remSettings = load(LS.reminder, { enabled: false, time: '07:00' });
-
-  function updateReminderUI() {
-    remEnable.checked = remSettings.enabled;
-    remTime.value = remSettings.time;
-    remStatus.textContent = remSettings.enabled
-      ? `🔔 Attivo: ogni giorno alle ${remSettings.time} (mantieni aperto il file).`
-      : 'Promemoria disattivato.';
-  }
-
-  function ensurePermission() {
-    if ('Notification' in window && Notification.permission === 'default') {
-      Notification.requestPermission();
-    }
-  }
-
-  remEnable.addEventListener('change', () => {
-    remSettings.enabled = remEnable.checked;
-    if (remSettings.enabled) ensurePermission();
-    save(LS.reminder, remSettings);
-    updateReminderUI();
-  });
-
-  remTime.addEventListener('change', () => {
-    remSettings.time = remTime.value;
-    save(LS.reminder, remSettings);
-    updateReminderUI();
-  });
-
-  $('remTest').addEventListener('click', () => {
-    ensurePermission();
-    if ('Notification' in window && Notification.permission === 'granted') {
-      new Notification('🌅 Routine mattutina', { body: '10 minuti di mobilità e respirazione — via!' });
-    } else {
-      beep(2);
-    }
-    remStatus.textContent = '🔔 Notifica di prova inviata!';
-    setTimeout(updateReminderUI, 2500);
-  });
-
-  setInterval(() => {
-    if (!remSettings.enabled) return;
-    const nowD = new Date();
-    const hhmm = String(nowD.getHours()).padStart(2, '0') + ':' + String(nowD.getMinutes()).padStart(2, '0');
-    const t = todayISO();
-    if (hhmm === remSettings.time && localStorage.getItem(LS.lastNotif) !== t) {
-      localStorage.setItem(LS.lastNotif, t);
-      if ('Notification' in window && Notification.permission === 'granted') {
-        new Notification('🌅 Routine mattutina', { body: '10 minuti di mobilità e respirazione — via!' });
-      }
-      chime();
-    }
-  }, 15000);
-
-  updateReminderUI();
-
-  /* ================= PAGINA PROGRESSI ================= */
-
-  /* ---------- Heatmap ---------- */
-  function renderHeatmap() {
-    const el = $('heatmap');
-    $('heatMonths').innerHTML = '';
-    el.innerHTML = '';
-    const counts = {};
-    history.forEach(h => { counts[h.date] = (counts[h.date] || 0) + 1; });
-
-    const end = new Date();
-    end.setHours(0, 0, 0, 0);
-    const mondayOffset = (end.getDay() + 6) % 7;
-    const start = new Date(end);
-    start.setDate(end.getDate() - mondayOffset - 8 * 7 + 1);
-
-    const months = [];
-    for (let week = 0; week < 9; week++) {
-      const firstOfWeek = new Date(start);
-      firstOfWeek.setDate(start.getDate() + week * 7);
-      const monthLabel = firstOfWeek.toLocaleDateString('it-IT', { month: 'short' });
-      if (!months.length || months[months.length - 1].label !== monthLabel) {
-        months.push({ label: monthLabel, week });
-      }
-      for (let dow = 0; dow < 7; dow++) {
-        const d = new Date(firstOfWeek);
-        d.setDate(firstOfWeek.getDate() + dow);
-        const iso = isoOf(d);
-        const c = counts[iso] || 0;
-        const cell = document.createElement('div');
-        cell.className = 'heat-cell' + (c >= 3 ? ' l3' : c === 2 ? ' l2' : c === 1 ? ' l1' : '') + (iso === todayISO() ? ' today' : '') + (d.getTime() > end.getTime() ? ' future' : '');
-        cell.title = d.toLocaleDateString('it-IT', { weekday: 'long', day: 'numeric', month: 'long' }) + (c ? ` — ${c} sessione/i` : ' — nessuna sessione');
-        el.appendChild(cell);
-      }
-    }
-
-    months.forEach((m, i) => {
-      const next = months[i + 1] ? months[i + 1].week : 9;
-      const span = document.createElement('span');
-      span.textContent = m.label;
-      span.style.gridColumn = `${m.week + 1} / span ${next - m.week}`;
-      $('heatMonths').appendChild(span);
-    });
-  }
-
-  /* ---------- Storico ---------- */
-  function renderHistory() {
-    const list = $('historyList');
-    const empty = $('historyEmpty');
-    list.innerHTML = '';
-
-    if (history.length === 0) { empty.style.display = 'block'; return; }
-    empty.style.display = 'none';
-
-    const sorted = [...history].sort((a, b) => b.date.localeCompare(a.date));
-    sorted.forEach(h => {
-      const [, m, d] = h.date.split('-');
-      const el = document.createElement('div');
-      el.className = 'history-item';
-      el.innerHTML = `<div><div class="date">${d}/${m}</div><div class="type">${typeLabel(h.type)}</div></div><span>✅</span>`;
-      list.appendChild(el);
-    });
-  }
-
-  $('historyReset').addEventListener('click', () => {
-    if (confirm('Vuoi davvero azzerare lo storico degli allenamenti?')) {
-      history = [];
-      save(LS.history, history);
-      renderHistory();
-      renderCalendar();
-      renderHeatmap();
-      renderOggi();
-      renderWeekTable();
-      syncSchemeButtons();
-    }
-  });
-
-  /* ---------- Peso ---------- */
-  const wInput = $('wInput');
-  const wDate = $('wDate');
-  wDate.value = todayISO();
-
-  function parseWeight(str) {
-    const v = parseFloat(String(str).replace(',', '.'));
-    return isNaN(v) || v <= 20 || v > 300 ? null : v;
-  }
-
-  function renderWeight() {
-    const chart = $('wChart');
-    const stats = $('wStats');
-    const list = $('wList');
-
-    if (weights.length === 0) {
-      chart.innerHTML = '<div class="w-empty">Nessun dato ancora — registra il tuo primo peso! ⚖️</div>';
-      stats.innerHTML = '';
-      list.innerHTML = '';
-      return;
-    }
-
-    const sorted = [...weights].sort((a, b) => a.d.localeCompare(b.d));
-    const recent = sorted.slice(-12);
-
-    chart.innerHTML = '';
-    const nums = recent.map(x => x.w);
-    const min = Math.min(...nums), max = Math.max(...nums);
-    const span = (max - min) || 1;
-    const t = todayISO();
-
-    recent.forEach(x => {
-      const col = document.createElement('div');
-      col.className = 'w-col' + (x.d === t ? ' today' : '');
-      const h = 18 + (x.w - min) / span * 78;
-      col.innerHTML = `
-        <div class="w-val">${x.w.toFixed(1).replace('.', ',')}</div>
-        <div class="w-bar" style="height:${h}%;" title="${x.d.split('-').reverse().join('/')} · ${x.w.toFixed(1).replace('.', ',')} kg"></div>
-        <div class="w-date">${x.d.slice(8)}/${x.d.slice(5, 7)}</div>
-      `;
-      chart.appendChild(col);
-    });
-
-    const first = sorted[0], last = sorted[sorted.length - 1];
-    const delta = last.w - first.w;
-    const avg = sorted.reduce((s, x) => s + x.w, 0) / sorted.length;
-    stats.innerHTML = `
-      <div class="stat"><div class="num">${last.w.toFixed(1).replace('.', ',')} kg</div><div class="lbl">Ultimo peso</div></div>
-      <div class="stat"><div class="num" style="color:${delta <= 0 ? 'var(--ok)' : 'var(--a)'};">${delta > 0 ? '+' : ''}${delta.toFixed(1).replace('.', ',')} kg</div><div class="lbl">Dal primo rilevamento</div></div>
-      <div class="stat"><div class="num">${avg.toFixed(1).replace('.', ',')} kg</div><div class="lbl">Media</div></div>
-      <div class="stat"><div class="num">${sorted.length}</div><div class="lbl">Rilevamenti</div></div>
-    `;
-
-    list.innerHTML = '';
-    const rev = [...sorted].reverse();
-    rev.forEach(x => {
-      const el = document.createElement('div');
-      el.className = 'history-item';
-      const [, m, d] = x.d.split('-');
-      el.innerHTML = `<div><div class="date">${d}/${m}</div></div><div style="display:flex; align-items:center; gap:10px;"><strong>${x.w.toFixed(1).replace('.', ',')} kg</strong><button class="del-btn" title="Elimina" data-d="${x.d}">✕</button></div>`;
-      el.querySelector('.del-btn').addEventListener('click', () => {
-        weights = weights.filter(w => w.d !== x.d);
-        save(LS.weight, weights);
-        renderWeight();
-      });
-      list.appendChild(el);
-    });
-  }
-
-  $('wSave').addEventListener('click', () => {
-    const w = parseWeight(wInput.value);
-    if (w === null) {
-      wInput.focus();
-      wInput.style.borderColor = 'var(--a)';
-      setTimeout(() => { wInput.style.borderColor = ''; }, 1200);
-      return;
-    }
-    const d = wDate.value || todayISO();
-    weights = weights.filter(x => x.d !== d);
-    weights.push({ d, w });
-    save(LS.weight, weights);
-    wInput.value = '';
-    renderWeight();
-  });
-
-  wInput.addEventListener('keydown', e => { if (e.key === 'Enter') $('wSave').click(); });
-
-  $('wReset').addEventListener('click', () => {
-    if (confirm('Vuoi davvero azzerare tutti i rilevamenti del peso?')) {
-      weights = [];
-      save(LS.weight, weights);
-      renderWeight();
-    }
-  });
-
-  /* ================= ALIAS STORICO ================= */
-
-  function renderCalendar() { renderWeekTable(); }
-
   /* ================= PWA ================= */
 
   let deferredPrompt = null;
@@ -2377,7 +1797,7 @@ footer { text-align: center; margin: 26px 0 10px; color: var(--muted); font-size
 
   if (location.protocol === 'http:' || location.protocol === 'https:') {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('sw.js').catch(() => {});
+      if (navigator.serviceWorker) navigator.serviceWorker.register('sw.js').catch(() => {});
     });
   }
 
@@ -2389,12 +1809,10 @@ footer { text-align: center; margin: 26px 0 10px; color: var(--muted); font-size
       checks = {};
       save(LS.checks, checks);
       save(LS.checksDay, t);
-      selectScheme(currentScheme, true);
+      if (DAY_BY_ID[currentDayId]) renderDay(currentDayId);
     }
     renderOggi();
     renderWeekTable();
-    renderHeatmap();
-    syncSchemeButtons();
   }
 
   document.addEventListener('visibilitychange', () => {
@@ -2431,14 +1849,10 @@ footer { text-align: center; margin: 26px 0 10px; color: var(--muted); font-size
   /* ================= INIT ================= */
 
   applyTheme(load(LS.theme, 'dark') || 'dark');
-  selectScheme('M', true);
+  renderDayTabs();
+  renderDay(currentDayId);
   renderOggi();
   renderWeekTable();
-  renderHeatmap();
-  renderHistory();
-  renderWeight();
-  renderSessionTimes();
-  syncSchemeButtons();
   showPage(currentPage());
 })();
 </script>
